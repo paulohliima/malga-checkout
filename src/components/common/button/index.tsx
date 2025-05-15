@@ -1,6 +1,10 @@
 import * as S from "./style";
 
-const Button = (label) => {
+interface IButton {
+  label: string;
+}
+
+const Button = ({ label }: IButton) => {
   return <S.Container>{label}</S.Container>;
 };
 
