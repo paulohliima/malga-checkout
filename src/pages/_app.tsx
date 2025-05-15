@@ -1,6 +1,13 @@
-import "@/styles/globals.css";
+import { GlobalStyles, Reset, RootVariables } from "@/styles";
 import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Reset />
+      <RootVariables />
+      <GlobalStyles />
+      <Component {...pageProps} />
+    </>
+  );
 }
