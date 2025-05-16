@@ -36,7 +36,7 @@ export interface IPaymentCard {
 }
 
 export interface IPaymentMethod {
-  type: "card";
+  type: "card" | "pix" | "ticket";
   card: IPaymentCard;
 }
 

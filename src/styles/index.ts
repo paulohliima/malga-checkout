@@ -60,7 +60,8 @@ export const RootVariables = createGlobalStyle`
         --color-brand-1: #4529E6;
         --color-brand-2: #5126EA;
         --color-brand-3: #B0A6F0;
-        --color-brand-4: #EDEAFD;
+        --color-brand-4: #EEEEEE;
+        --color-brand-5: #F3F5FF;
 
         //GENERAL COLORS
         --color-white: #FFFFFF;
@@ -123,12 +124,14 @@ export const RootVariables = createGlobalStyle`
         --inter: Inter;
         --lexend: Lexend, sans-serif;
 
+        //BOX-SHADOW
+        --box-shadow-1: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 `;
 
 export const GlobalStyles = createGlobalStyle`
     body { 
-        background: var(--color-background);
+        background: var(--color-brand-4);
         color: var(--grey-4);
         min-height: 100vh;
         font-family: var(--inter);

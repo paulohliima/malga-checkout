@@ -2,7 +2,7 @@ import { ITransactionResponse } from "../interfaces/transactions";
 
 export const transactions: ITransactionResponse[] = [
   {
-    id: "3a8f0e3b-65a3-4e9c-8f2b-42f9a8a91c99",
+    id: "1",
     status: "authorized",
     amount: 10000,
     customer: {
