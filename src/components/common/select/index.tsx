@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as S from "./style";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
@@ -10,7 +11,7 @@ interface ICustomSelect {
   label: string;
   value: string | number;
   options: Option[];
-  onChange: React.Dispatch<string | number>;
+  onChange: React.Dispatch<any>;
   fullWidth?: boolean;
 }
 
@@ -32,6 +33,26 @@ const CustomSelect = ({
           MenuProps={{
             disableScrollLock: true,
             style: { width: "100%" },
+          }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "var(--color-profile-2)",
+              },
+              "&:hover fieldset": {
+                borderColor: "var(--color-profile-2)",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "var(--color-profile-2)",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              color: "var(--grey-2)",
+            },
+            "& fieldset": {
+              borderRadius: "16px",
+              borderColor: "var(--color-profile-2)",
+            },
           }}
         >
           {options.map((opt) => (

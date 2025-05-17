@@ -5,7 +5,7 @@ interface IProductCard {
   item: IItem;
 }
 
-export const ProductCard = ({ item }: IProductCard) => {
+const ProductCard = ({ item }: IProductCard) => {
   return (
     <S.Container>
       <S.Column>
@@ -25,3 +25,5 @@ export const ProductCard = ({ item }: IProductCard) => {
     </S.Container>
   );
 };
+
+export default ProductCard;

@@ -1,8 +1,12 @@
 import CheckoutForm from "@/components/common/forms/checkoutForm";
-// import * as S from "./styles";
+import * as S from "./styles";
 
 const CheckoutPage: React.FC = () => {
-  return <CheckoutForm />;
+  return (
+    <S.Container>
+      <CheckoutForm />
+    </S.Container>
+  );
 };
 
 export default CheckoutPage;

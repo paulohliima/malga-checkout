@@ -5,10 +5,26 @@ import CustomButton from "../../button";
 import CustomInput from "../../input";
 import { useTransactions } from "@/providers/transactionsProvider";
 import { useLoading } from "@/providers/loadingProvider";
+import { transactionsService } from "@/services/transactionsService";
+import { toast } from "react-toastify";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
-const FilterInputs = () => {
-  const { setLoading } = useLoading();
-  const { allTransactions, setTransactionsValues } = useTransactions();
+interface IFilterInputs {
+  handleClearFilter: () => void;
+}
+
+const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
+  const isMobile = useMediaQuery();
+  const { loading, setLoading } = useLoading();
+  const { allTransactions, setTransactionsValues, setPageValues } =
+    useTransactions();
+
+  const [filters, setFilters] = useState({
+    typeFilter: "id",
+    inputValue: "",
+    status: "",
+    method: "",
+  });
 
   const optionsType = [
     { value: "id", label: "ID" },
@@ -27,54 +43,56 @@ const FilterInputs = () => {
     { value: "ticket", label: "Boleto" },
   ];
 
-  const [typeFilter, setTypeFilter] = useState<string | number>("id");
-  const [inputValueId, setInputValueId] = useState<string>("");
-  const [typeStatus, setTypeStatus] = useState<string | number>("aproved");
-  const [typeMethod, setTypeMethod] = useState<string | number>("card");
+  const handleRefreshList = async () => {
+    try {
+      const data = await transactionsService.getAll({ page: 1 });
+      setLoading(true);
+      setTimeout(() => {
+        setTransactionsValues(data);
+        setPageValues((prev) => ({
+          ...prev,
+          currentPage: 1,
+        }));
+        setLoading(false);
+      }, 400);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+      } else {
+        toast.error("Erro desconhecido");
+      }
+    }
+  };
 
   const handleClearValuesFilter = () => {
-    setTransactionsValues(allTransactions);
-    setTypeFilter("id");
-    setInputValueId("");
-    setTypeStatus("");
-    setTypeMethod("");
+    handleClearFilter();
   };
 
   const handleSearchFilter = () => {
+    const { typeFilter, inputValue, status, method } = filters;
+    let filtered = [];
+
     switch (typeFilter) {
       case "id":
-        const transactionsFilteredById = allTransactions.filter(
-          (tx) => tx.id === inputValueId
-        );
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 300);
-        setTransactionsValues(transactionsFilteredById);
+        filtered = allTransactions.filter((tx) => tx.id === inputValue);
         break;
       case "status":
-        const transactionsFilteredByStatus = allTransactions.filter(
-          (tx) => tx.status === typeStatus
-        );
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 300);
-        setTransactionsValues(transactionsFilteredByStatus);
+        filtered = allTransactions.filter((tx) => tx.status === status);
         break;
       case "method":
-        const transactionsFilteredByMethod = allTransactions.filter(
-          (tx) => tx.paymentMethod.type === typeMethod
+        filtered = allTransactions.filter(
+          (tx) => tx.paymentMethod.type === method
         );
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 300);
-        setTransactionsValues(transactionsFilteredByMethod);
         break;
       default:
-        break;
+        filtered = allTransactions;
     }
+
+    setLoading(true);
+    setTimeout(() => {
+      setTransactionsValues(filtered);
+      setLoading(false);
+    }, 300);
   };
 
   return (
@@ -82,47 +100,67 @@ const FilterInputs = () => {
       <S.InputsContainer>
         <CustomSelect
           label="Tipo"
-          value={typeFilter}
-          onChange={(e) => setTypeFilter(e)}
+          value={filters.typeFilter}
+          onChange={(e) => setFilters((prev) => ({ ...prev, typeFilter: e }))}
           options={optionsType}
         />
-        {typeFilter === "id" && (
+
+        {filters.typeFilter === "id" && (
           <CustomInput
             label="Digite o Id"
-            value={inputValueId}
-            onChange={(e) => setInputValueId(e)}
+            value={filters.inputValue}
+            onChange={(e) => setFilters((prev) => ({ ...prev, inputValue: e }))}
           />
         )}
-        {typeFilter === "status" && (
+
+        {filters.typeFilter === "status" && (
           <CustomSelect
             label="Status"
-            value={typeStatus}
-            onChange={(e) => setTypeStatus(e)}
+            value={filters.status}
+            onChange={(e) => setFilters((prev) => ({ ...prev, status: e }))}
             options={optionsStatus}
           />
         )}
-        {typeFilter === "method" && (
+
+        {filters.typeFilter === "method" && (
           <CustomSelect
-            label="Metódo de Pagamento"
-            value={typeMethod}
-            onChange={(e) => setTypeMethod(e)}
+            label="Método de Pagamento"
+            value={filters.method}
+            onChange={(e) => setFilters((prev) => ({ ...prev, method: e }))}
             options={optionsMethod}
           />
         )}
       </S.InputsContainer>
+
       <S.Row>
-        <CustomButton
-          variant="outlined"
-          label="Buscar"
-          color="#006f7d"
-          onClick={handleSearchFilter}
-        />
-        <CustomButton
-          variant="text"
-          label="Limpar Filtros"
-          color="#006f7d"
-          onClick={handleClearValuesFilter}
-        />
+        <S.ButtonsContainer>
+          <CustomButton
+            variant="outlined"
+            label="Buscar"
+            color="#006f7d"
+            onClick={handleSearchFilter}
+          />
+          <CustomButton
+            variant="text"
+            label="Limpar Filtros"
+            color="#006f7d"
+            onClick={handleClearValuesFilter}
+          />
+        </S.ButtonsContainer>
+        {!isMobile && (
+          <S.RefreshContainer onClick={handleRefreshList}>
+            <S.RefreshIcon
+              $loading={loading}
+              style={{
+                width: "30px",
+                height: "30px",
+                color: "var(--color-profile-2)",
+                alignSelf: "end",
+              }}
+            />
+            <S.RefreshLabel>Atualizar</S.RefreshLabel>
+          </S.RefreshContainer>
+        )}
       </S.Row>
     </S.Container>
   );
