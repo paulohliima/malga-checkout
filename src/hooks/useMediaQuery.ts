@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useMediaQuery = (maxWidth = 767): boolean => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(`(max-width: ${maxWidth}px)`);
@@ -10,10 +10,8 @@ const useMediaQuery = (maxWidth = 767): boolean => {
       setIsMobile(e.matches);
     };
 
-    // Set initial value
     setIsMobile(mediaQuery.matches);
 
-    // Listen for changes
     mediaQuery.addEventListener("change", handleChange);
 
     return () => {
@@ -21,7 +19,7 @@ const useMediaQuery = (maxWidth = 767): boolean => {
     };
   }, [maxWidth]);
 
-  return isMobile;
+  return isMobile ?? false;
 };
 
 export default useMediaQuery;

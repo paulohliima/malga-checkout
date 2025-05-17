@@ -81,26 +81,13 @@ export const RootVariables = createGlobalStyle`
         --grey-10: #fdfdfd;
 
         //FEEDBACK
-        --alert-1: #cd2b31;
-        --alert-2: #fdd8d8;
-        --alert-3: #ffe5e5;
+        --alert-1:#cd742b;
         --sucess-1: #18794e;
-        --sucess-2: #ccebd7;
-        --sucess-3: #ddf3e4;
 
         //COLORS PROFILE
-        --color-profile-1: #e34d8c;
-        --color-profile-2: #c04277;
-        --color-profile-3: #7d2a4d;
-        --color-profile-4: #7000ff;
-        --color-profile-5: #6200e3;
-        --color-profile-6: #36007d;
-        --color-profile-7: #349974;
-        --color-profile-8: #2a7d5f;
-        --color-profile-9: #153d2e;
-        --color-profile-10: #6100ff;
-        --color-profile-11: #5700e3;
-        --color-profile-12: #30007d;
+        --color-profile-1: #349974;
+        --color-profile-2: #2a7d5f;
+        --color-profile-3: #006f7d;
 
         //FONTS-SIZE
         --font-size-12: 12px;
@@ -134,7 +121,7 @@ export const GlobalStyles = createGlobalStyle`
         background: var(--color-brand-4);
         color: var(--grey-4);
         min-height: 100vh;
-        font-family: var(--inter);
+        font-family: var(--lexend);
     }
 
     button {

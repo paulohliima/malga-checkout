@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 export interface IButtonProps {
   label?: string;
-  onClick: () => void;
+  onClick?: () => void;
   variant?: "text" | "outlined" | "contained" | "stylized";
   color?:
     | "inherit"
@@ -16,10 +16,12 @@ export interface IButtonProps {
     | "success"
     | "error"
     | "info"
-    | "warning";
+    | "warning"
+    | string;
   size?: "small" | "medium" | "large";
   iconType?: "visibility" | "edit" | "delete" | "none";
   padding?: string;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 const CustomButton: React.FC<IButtonProps> = ({
@@ -30,6 +32,7 @@ const CustomButton: React.FC<IButtonProps> = ({
   size = "medium",
   iconType,
   padding = "2px 8px",
+  type,
 }) => {
   let icon: React.ReactNode;
 
@@ -61,13 +64,19 @@ const CustomButton: React.FC<IButtonProps> = ({
           onClick={onClick}
           variant={variant}
           size={size}
-          color={color}
-          sx={{ width: "max-content", padding, minWidth: "10px" }}
+          sx={{
+            width: "max-content",
+            padding,
+            minWidth: "10px",
+            color,
+            borderColor: color,
+          }}
+          type={type}
         >
           {label || icon}
         </Button>
       ) : (
-        <S.Container>Teste</S.Container>
+        <S.Container>{label}</S.Container>
       )}
     </>
   );

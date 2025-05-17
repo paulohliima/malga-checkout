@@ -1,11 +1,13 @@
 import * as S from "./styles";
-import { transactions } from "@/lib/transactions-store";
 import TransactionsList from "@/components/transactionsList";
+import { useTransactions } from "@/providers/transactionsProvider";
 
 const DashboardPage: React.FC = () => {
+  const { transactionsValues } = useTransactions();
+
   return (
     <S.Container>
-      <TransactionsList transactions={transactions}></TransactionsList>
+      <TransactionsList transactions={transactionsValues}></TransactionsList>
     </S.Container>
   );
 };

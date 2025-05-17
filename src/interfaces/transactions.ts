@@ -35,9 +35,24 @@ export interface IPaymentCard {
   lastDigits?: string; // na resposta
 }
 
+export interface ITicketPayment {
+  barcode: string;
+  digitableLine: string;
+  url: string;
+  dueDate: string;
+}
+
+export interface IPixPayment {
+  qrCodeUrl: string;
+  expiresAt: string;
+  transactionId?: string;
+}
+
 export interface IPaymentMethod {
   type: "card" | "pix" | "ticket";
-  card: IPaymentCard;
+  card?: IPaymentCard;
+  pix?: IPixPayment;
+  ticket?: ITicketPayment;
 }
 
 export interface ITransactionRequest {

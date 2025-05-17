@@ -1,13 +1,5 @@
 import styled from "styled-components";
-import { Paper, Box } from "@mui/material";
-
-export const Container = styled(Paper)`
-  padding: 60px 12px 20px 12px;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  position: relative;
-  max-width: 768px;
-`;
+import { Box } from "@mui/material";
 
 export const TitleBox = styled(Box)`
   display: flex;
@@ -16,7 +8,7 @@ export const TitleBox = styled(Box)`
   position: absolute;
 
   svg {
-    background-color: #e91e63;
+    background-color: var(--color-profile-1);
     color: white;
     border-radius: 4px;
     padding: 6px;

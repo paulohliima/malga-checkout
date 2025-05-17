@@ -1,6 +1,6 @@
 import { ITransactionResponse } from "@/interfaces/transactions";
 import * as S from "./style";
-import TransactionCard from "../transactionCard";
+import TransactionCard from "@/components/cards/transactionCard";
 
 interface ICardList {
   transactions: ITransactionResponse[];
