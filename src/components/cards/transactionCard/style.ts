@@ -12,7 +12,7 @@ export const Container = styled.div`
   border-radius: 12px;
   background-color: var(--color-white);
   position: relative;
-  max-width: 600px;
+  max-width: 500px;
 `;
 
 export const Column = styled.div`
@@ -68,6 +68,7 @@ export const Bold = styled.span`
 
 export const ContainerIdLabel = styled.div`
   background-color: var(--color-brand-5);
+  border-radius: 8px;
   padding: 6px;
 `;
 

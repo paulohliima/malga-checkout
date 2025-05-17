@@ -110,16 +110,18 @@ export const RootVariables = createGlobalStyle`
         //FONTS
         --inter: Inter;
         --lexend: Lexend, sans-serif;
+        --pacifico: "Pacifico", cursive;
 
         //BOX-SHADOW
         --box-shadow-1: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        --box-shadow-2: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
     }
 `;
 
 export const GlobalStyles = createGlobalStyle`
     body { 
-        background: var(--color-brand-4);
-        color: var(--grey-4);
+        background: var(--color-brand-5);
+        color: var(--grey-3);
         min-height: 100vh;
         font-family: var(--lexend);
     }

@@ -19,7 +19,7 @@ import {
   IPaymentMethod,
   ITransactionResponse,
 } from "@/interfaces/transactions";
-import { ProductCard } from "@/components/cards/productCard";
+import ProductCard from "@/components/cards/productCard";
 import ProductsList from "@/components/productsList";
 
 interface ITransactionDetailModal {

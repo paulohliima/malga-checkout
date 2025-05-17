@@ -2,17 +2,18 @@ import styled from "styled-components";
 
 export const Container = styled.button`
   display: inline-block;
-  padding: 12px 24px;
+  padding: 6px 12px;
   border: 1px solid #4f4f4f;
   border-radius: 4px;
   font-size: 19px;
   cursor: pointer;
-  color: black;
+  color: var(--color-profile-1);
   position: relative;
   overflow: hidden;
   z-index: 1;
   background-color: transparent;
   transition: all 0.2s ease-in;
+  border: 1px solid var(--color-profile-1);
 
   &::before,
   &::after {

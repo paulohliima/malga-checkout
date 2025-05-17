@@ -6,7 +6,7 @@ export const Button = styled.button`
   right: 40px;
   width: 48px;
   height: 48px;
-  background-color: var(--color-profile-3);
+  background-color: var(--color-profile-2);
   color: white;
   border: none;
   border-radius: 50%;

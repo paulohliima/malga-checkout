@@ -6,9 +6,20 @@ import CustomInput from "../../input";
 import { useTransactions } from "@/providers/transactionsProvider";
 import { useLoading } from "@/providers/loadingProvider";
 
-const FilterInputs = () => {
+interface IFilterInputs {
+  handleClearFilter: () => void;
+}
+
+const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
   const { setLoading } = useLoading();
   const { allTransactions, setTransactionsValues } = useTransactions();
+
+  const [filters, setFilters] = useState({
+    typeFilter: "id",
+    inputValue: "",
+    status: "",
+    method: "",
+  });
 
   const optionsType = [
     { value: "id", label: "ID" },
@@ -27,54 +38,43 @@ const FilterInputs = () => {
     { value: "ticket", label: "Boleto" },
   ];
 
-  const [typeFilter, setTypeFilter] = useState<string | number>("id");
-  const [inputValueId, setInputValueId] = useState<string>("");
-  const [typeStatus, setTypeStatus] = useState<string | number>("aproved");
-  const [typeMethod, setTypeMethod] = useState<string | number>("card");
-
   const handleClearValuesFilter = () => {
     setTransactionsValues(allTransactions);
-    setTypeFilter("id");
-    setInputValueId("");
-    setTypeStatus("");
-    setTypeMethod("");
+    setFilters({
+      typeFilter: "id",
+      inputValue: "",
+      status: "",
+      method: "",
+    });
+    handleClearFilter();
   };
 
   const handleSearchFilter = () => {
+    const { typeFilter, inputValue, status, method } = filters;
+    let filtered = [];
+
     switch (typeFilter) {
       case "id":
-        const transactionsFilteredById = allTransactions.filter(
-          (tx) => tx.id === inputValueId
-        );
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 300);
-        setTransactionsValues(transactionsFilteredById);
+        filtered = allTransactions.filter((tx) => tx.id === inputValue);
         break;
       case "status":
-        const transactionsFilteredByStatus = allTransactions.filter(
-          (tx) => tx.status === typeStatus
-        );
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 300);
-        setTransactionsValues(transactionsFilteredByStatus);
+        filtered = allTransactions.filter((tx) => tx.status === status);
         break;
       case "method":
-        const transactionsFilteredByMethod = allTransactions.filter(
-          (tx) => tx.paymentMethod.type === typeMethod
+        filtered = allTransactions.filter(
+          (tx) => tx.paymentMethod.type === method
         );
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 300);
-        setTransactionsValues(transactionsFilteredByMethod);
         break;
       default:
-        break;
+        filtered = allTransactions;
     }
+
+    setLoading(true);
+    handleClearFilter();
+    setTimeout(() => {
+      setTransactionsValues(filtered);
+      setLoading(false);
+    }, 300);
   };
 
   return (
@@ -82,34 +82,38 @@ const FilterInputs = () => {
       <S.InputsContainer>
         <CustomSelect
           label="Tipo"
-          value={typeFilter}
-          onChange={(e) => setTypeFilter(e)}
+          value={filters.typeFilter}
+          onChange={(e) => setFilters((prev) => ({ ...prev, typeFilter: e }))}
           options={optionsType}
         />
-        {typeFilter === "id" && (
+
+        {filters.typeFilter === "id" && (
           <CustomInput
             label="Digite o Id"
-            value={inputValueId}
-            onChange={(e) => setInputValueId(e)}
+            value={filters.inputValue}
+            onChange={(e) => setFilters((prev) => ({ ...prev, inputValue: e }))}
           />
         )}
-        {typeFilter === "status" && (
+
+        {filters.typeFilter === "status" && (
           <CustomSelect
             label="Status"
-            value={typeStatus}
-            onChange={(e) => setTypeStatus(e)}
+            value={filters.status}
+            onChange={(e) => setFilters((prev) => ({ ...prev, status: e }))}
             options={optionsStatus}
           />
         )}
-        {typeFilter === "method" && (
+
+        {filters.typeFilter === "method" && (
           <CustomSelect
-            label="Metódo de Pagamento"
-            value={typeMethod}
-            onChange={(e) => setTypeMethod(e)}
+            label="Método de Pagamento"
+            value={filters.method}
+            onChange={(e) => setFilters((prev) => ({ ...prev, method: e }))}
             options={optionsMethod}
           />
         )}
       </S.InputsContainer>
+
       <S.Row>
         <CustomButton
           variant="outlined"

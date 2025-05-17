@@ -30,7 +30,7 @@ export const MenuButton = styled.button<MenuButtonProps>`
     display: block;
     height: 4px;
     background: ${({ $isOpen }) =>
-      $isOpen ? "var(--color-white)" : "var(--color-profile-3)"};
+      $isOpen ? "var(--color-white)" : "var(--grey-2)"};
     border-radius: 2px;
     transition: all 0.3s ease;
     transform-origin: 4px 2px;
@@ -84,7 +84,7 @@ export const Container = styled.aside<ContainerProps>`
   height: 100vh;
   background-color: #252525;
   color: white;
-  padding: 100px 20px 20px;
+  padding: 60px 20px 20px;
   box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
   transition: right 0.3s ease;
   z-index: 1050;
@@ -94,14 +94,13 @@ export const Menu = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   height: 100%;
 
   li {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 8px;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.2s ease;
@@ -115,5 +114,11 @@ export const Menu = styled.ul`
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
+  gap: 30px;
+
+  li {
+    display: flex;
+    justify-content: start;
+  }
 `;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-  padding: 20px;
-  background-color: #f9f9f9;
+  padding-top: 80px;
+  background-color: var(--color-brand-5);
   min-height: 100vh;
 `;

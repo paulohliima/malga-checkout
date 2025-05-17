@@ -6,6 +6,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { MdOutlineExitToApp } from "react-icons/md";
 
 import { useRouter } from "next/router";
+import Logo from "../logo";
 
 const SideBar = () => {
   const router = useRouter();
@@ -64,6 +65,7 @@ const SideBar = () => {
       <S.Overlay $isOpen={isOpen} onClick={toggleMenu} />
       <S.Container $isOpen={isOpen}>
         <S.Menu>
+          <Logo marginBotton="80px" />
           <S.Column>
             <li onClick={handleDashboard}>
               <DashboardIcon
@@ -75,10 +77,10 @@ const SideBar = () => {
               <PersonIcon
                 style={{ marginRight: 8, width: "30px", height: "30px" }}
               />
-              Área do Cliente
+              Área de Pagamento
             </li>
           </S.Column>
-          <li onClick={handleLogout}>
+          <li onClick={handleLogout} style={{ marginTop: "auto" }}>
             <MdOutlineExitToApp
               style={{ marginRight: 8, width: "30px", height: "30px" }}
             />

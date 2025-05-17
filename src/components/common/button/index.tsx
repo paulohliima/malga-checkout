@@ -22,6 +22,7 @@ export interface IButtonProps {
   iconType?: "visibility" | "edit" | "delete" | "none";
   padding?: string;
   type?: "button" | "submit" | "reset" | undefined;
+  sxStyle?: object;
 }
 
 const CustomButton: React.FC<IButtonProps> = ({
@@ -31,8 +32,9 @@ const CustomButton: React.FC<IButtonProps> = ({
   color = "inherit",
   size = "medium",
   iconType,
-  padding = "2px 8px",
+  padding = "4px 12px",
   type,
+  sxStyle = {},
 }) => {
   let icon: React.ReactNode;
 
@@ -70,13 +72,34 @@ const CustomButton: React.FC<IButtonProps> = ({
             minWidth: "10px",
             color,
             borderColor: color,
+            border:
+              variant === "text"
+                ? "none"
+                : variant === "outlined"
+                ? "1px solid var(--color-profile-3)"
+                : "none",
+            transition: "0.2s ease-in",
+            borderRadius: variant === "text" ? "none" : "12px",
+            "&:hover":
+              variant === "text"
+                ? {
+                    backgroundColor: "transparent",
+                    color: "var(--color-profile-1)",
+                  }
+                : variant === "outlined"
+                ? {
+                    color: "var(--color-profile-1)",
+                    borderColor: "var(--color-profile-1)",
+                  }
+                : {},
+            ...sxStyle,
           }}
           type={type}
         >
           {label || icon}
         </Button>
       ) : (
-        <S.Container>{label}</S.Container>
+        <S.Container onClick={onClick}>{label}</S.Container>
       )}
     </>
   );
