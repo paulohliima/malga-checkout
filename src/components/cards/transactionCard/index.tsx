@@ -8,58 +8,16 @@ import { useState } from "react";
 import TransactionDetailModal from "../../modals/transactionDetail";
 import { transactionsService } from "@/services/transactionsService";
 import { toast } from "react-toastify";
+import useTranslate from "@/hooks/useTranslate";
+import { Box } from "@mui/material";
 
 interface ITransactionCard {
   transaction: ITransactionResponse;
 }
 
-const getPaymentMethodInfo = (type: string) => {
-  switch (type) {
-    case "card":
-      return {
-        icon: "/assets/images/credit-card.png",
-        label: "Cartão de Crédito",
-      };
-    case "pix":
-      return {
-        icon: "/assets/images/pix.svg",
-        label: "Pix",
-      };
-    case "ticket":
-      return {
-        icon: "/assets/images/ticket.png",
-        label: "Boleto",
-      };
-    default:
-      return {
-        icon: "",
-        label: "Outro",
-      };
-  }
-};
-
-const getStatusInfo = (type: string) => {
-  switch (type) {
-    case "authorized":
-      return {
-        status: "Autorizado",
-        statusColor: "#00c26b",
-      };
-    case "failed":
-      return {
-        status: "Bloqueado",
-        statusColor: "#cd742b",
-      };
-    default:
-      return {
-        status: "Outro",
-        statusColor: "blue",
-      };
-  }
-};
-
 const TransactionCard = ({ transaction }: ITransactionCard) => {
   const { loading } = useLoading();
+  const { getStatusInfo, getPaymentMethodInfo } = useTranslate();
   const [openModalDetails, setOpenModalDetails] = useState(false);
   const [transactionDetail, setTransactionDetail] =
     useState<ITransactionResponse>();
@@ -97,6 +55,7 @@ const TransactionCard = ({ transaction }: ITransactionCard) => {
             ) : (
               <S.MethodIcon src={methodIcon}></S.MethodIcon>
             )}
+            <S.DividerVertical />
             <S.Column>
               <S.StatusContainer>
                 {loading ? (
@@ -107,7 +66,19 @@ const TransactionCard = ({ transaction }: ITransactionCard) => {
                 {loading ? (
                   <LoadingText width="90px" height="22px" />
                 ) : (
-                  <S.StatusLabel $color={statusColor}>{status}</S.StatusLabel>
+                  <Box
+                    sx={{
+                      backgroundColor: statusColor,
+                      color: "#fff",
+                      borderRadius: "8px",
+                      padding: "2px 8px",
+                      fontWeight: 500,
+                      textTransform: "capitalize",
+                      width: "max-content",
+                    }}
+                  >
+                    <S.StatusLabel>{status}</S.StatusLabel>
+                  </Box>
                 )}
               </S.StatusContainer>
               <S.MethodContainerLabel>

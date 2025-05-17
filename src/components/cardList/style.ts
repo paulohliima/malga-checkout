@@ -6,3 +6,10 @@ export const Container = styled.div`
   gap: 14px;
   align-items: center;
 `;
+
+export const LoadMore = styled.h4`
+  margin-top: 30px;
+  font-size: var(--font-size-24);
+  font-family: var(--lexend);
+  color: var(--color-profile-2);
+`;

@@ -26,7 +26,7 @@ export const Column = styled.div`
 export const Row = styled.div`
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
   height: 100%;
 `;
 
@@ -46,9 +46,13 @@ export const StatusContainer = styled.div`
   gap: 5px;
 `;
 
-export const StatusLabel = styled.h2<{ $color: string }>`
-  color: ${(props) => props.$color};
+export const DividerVertical = styled.div`
+  width: 1px;
+  height: 100%;
+  background-color: var(--grey-3);
 `;
+
+export const StatusLabel = styled.h2``;
 
 export const IdLabel = styled.h3`
   font-size: var(--font-size-12);

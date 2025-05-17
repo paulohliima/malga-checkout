@@ -6,9 +6,15 @@ import {
 
 const API_URL = "/api/transactions";
 
+interface IGetAll {
+  page?: number;
+}
+
 export const transactionsService = {
-  getAll: async (): Promise<ITransactionResponse[]> => {
-    const response = await axios.get<ITransactionResponse[]>(API_URL);
+  getAll: async ({ page }: IGetAll = {}): Promise<ITransactionResponse[]> => {
+    const response = await axios.get<ITransactionResponse[]>(API_URL, {
+      params: page ? { page } : {},
+    });
     return response.data;
   },
 

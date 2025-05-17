@@ -22,6 +22,7 @@ export const Container = styled.div<ContainerProps>`
   color: var(--color-white);
   box-shadow: var(--box-shadow-1);
   box-sizing: border-box;
+  cursor: pointer;
   border: 2px solid
     ${(props) => (props.$selected ? "var(--color-profile-3)" : "transparent")};
 
@@ -42,12 +43,25 @@ export const Container = styled.div<ContainerProps>`
       height: 50px;
     }
   }
+  @media (min-width: 768px) {
+    height: 80px;
+    width: 220px;
+    padding: 20px;
+
+    svg {
+      width: 50px;
+      height: 50px;
+    }
+  }
 `;
 
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  @media (min-width: 768px) {
+    gap: 0;
+  }
 `;
 
 export const Title = styled.h3`

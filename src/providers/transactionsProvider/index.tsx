@@ -6,15 +6,21 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { transactions } from "@/lib/transactions-store";
 import { transactionsService } from "@/services/transactionsService";
 import { toast } from "react-toastify";
+import { transactions } from "@/lib/transactions-store";
 
 interface TransactionsContextType {
   transactionsValues: ITransactionResponse[];
   setTransactionsValues: (transactions: ITransactionResponse[]) => void;
   allTransactions: ITransactionResponse[];
   setAllTransactions: (transactions: ITransactionResponse[]) => void;
+  transactionsPaginated: ITransactionResponse[];
+  setTransactionsPaginated: (transactions: ITransactionResponse[]) => void;
+  pageValues: { currentPage: number; totalPages: number };
+  setPageValues: React.Dispatch<
+    React.SetStateAction<{ currentPage: number; totalPages: number }>
+  >;
 }
 
 const TransactionsContext = createContext<TransactionsContextType | undefined>(
@@ -22,15 +28,25 @@ const TransactionsContext = createContext<TransactionsContextType | undefined>(
 );
 
 export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
-  const [transactionsValues, setTransactionsValues] = useState(transactions);
-  const [allTransactions, setAllTransactions] = useState(transactions);
+  const [transactionsValues, setTransactionsValues] = useState<
+    ITransactionResponse[]
+  >([]);
+  const [allTransactions, setAllTransactions] =
+    useState<ITransactionResponse[]>(transactions);
+  const [transactionsPaginated, setTransactionsPaginated] = useState<
+    ITransactionResponse[]
+  >([]);
+  const [pageValues, setPageValues] = useState({
+    currentPage: 1,
+    totalPages: Math.ceil(allTransactions.length / 5),
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await transactionsService.getAll();
-        setAllTransactions(data);
-        setTransactionsValues(data);
+        const dataPaginated = await transactionsService.getAll({ page: 1 });
+        setTransactionsValues(dataPaginated);
+        setTransactionsPaginated(dataPaginated);
       } catch (e: unknown) {
         if (e instanceof Error) {
           toast.error(e.message);
@@ -50,6 +66,10 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         setTransactionsValues,
         allTransactions,
         setAllTransactions,
+        transactionsPaginated,
+        setTransactionsPaginated,
+        pageValues,
+        setPageValues,
       }}
     >
       {children}

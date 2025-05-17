@@ -101,6 +101,9 @@ export const RootVariables = createGlobalStyle`
         --font-size-44: 44px;
 
         //FONTS-WEIGHT
+        --font-weight-100: 100;
+        --font-weight-200: 200;
+        --font-weight-300: 300;
         --font-weight-400: 400;
         --font-weight-500: 500;
         --font-weight-600: 600;

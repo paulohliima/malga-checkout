@@ -2,7 +2,6 @@ import * as S from "./style";
 
 import { IoOptionsOutline } from "react-icons/io5";
 import { IoIosArrowUp } from "react-icons/io";
-import { MdOutlinePayments } from "react-icons/md";
 import { TfiStatsUp, TfiStatsDown } from "react-icons/tfi";
 
 import CardList from "../cardList";
@@ -28,7 +27,12 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
   const isMobile = useMediaQuery();
   const { loading, setLoading } = useLoading();
 
-  const { allTransactions, setTransactionsValues } = useTransactions();
+  const {
+    allTransactions,
+    transactionsPaginated,
+    setTransactionsValues,
+    setPageValues,
+  } = useTransactions();
   const [openMenuFilter, setOpenMenuFilter] = useState(false);
 
   const [inputValueId, setInputValueId] = useState("");
@@ -62,11 +66,14 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
   const handleRefreshList = async () => {
     setOpenMenuFilter(false);
     try {
-      const data = await transactionsService.getAll();
-      setTransactionsValues(data);
+      const data = await transactionsService.getAll({ page: 1 });
       setLoading(true);
       setTimeout(() => {
         setTransactionsValues(data);
+        setPageValues((prev) => ({
+          ...prev,
+          currentPage: 1,
+        }));
         setLoading(false);
       }, 300);
     } catch (e: unknown) {
@@ -79,10 +86,14 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
   };
 
   const handleClearFilter = () => {
-    setTransactionsValues(allTransactions);
+    setTransactionsValues(transactionsPaginated);
     setInputValueId("");
     setSearchedValue(false);
     setSelectFilterByStatus("");
+    setPageValues((prev) => ({
+      ...prev,
+      currentPage: 1,
+    }));
   };
 
   const handleSearchById = () => {
@@ -138,7 +149,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
     <S.Container>
       <S.TitleBox>
         <S.Row>
-          <MdOutlinePayments />
+          <S.IconTransactions />
           <S.Title>TRANSAÇÕES</S.Title>
         </S.Row>
       </S.TitleBox>
@@ -146,7 +157,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
       {isMobile && <S.Divider />}
 
       <AnimatePresence>
-        {openMenuFilter && (
+        {openMenuFilter && isMobile ? (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -155,7 +166,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
           >
             <S.ContainerCardsInfo>
               <InfoCard
-                label="Authorizados:"
+                label="Autorizados:"
                 icon={<TfiStatsUp />}
                 value={countStatsValues.authorized}
                 type="success"
@@ -187,10 +198,52 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
               />
             </S.Row>
           </motion.div>
+        ) : (
+          !isMobile && (
+            <>
+              <S.ContainerCardsInfo>
+                <InfoCard
+                  label="Autorizados:"
+                  icon={<TfiStatsUp />}
+                  value={countStatsValues.authorized}
+                  type="success"
+                  selected={selectFilterByStatus === "authorized"}
+                  onClick={() => handleSelectFilterStatus("authorized")}
+                />
+                <InfoCard
+                  label="Bloqueados:"
+                  icon={<TfiStatsDown />}
+                  value={countStatsValues.failed}
+                  type="failed"
+                  selected={selectFilterByStatus === "failed"}
+                  onClick={() => handleSelectFilterStatus("failed")}
+                />
+              </S.ContainerCardsInfo>
+
+              <FilterInputs handleClearFilter={handleClearFilter} />
+
+              {isMobile && <S.Divider />}
+              {isMobile && (
+                <S.Row>
+                  <IoIosArrowUp
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      color: "var(--color-profile-2)",
+                      margin: "0 auto",
+                      marginBottom: "20px",
+                      cursor: "pointer",
+                    }}
+                    onClick={handleOpenMenuFilter}
+                  />
+                </S.Row>
+              )}
+            </>
+          )
         )}
       </AnimatePresence>
 
-      {!openMenuFilter && (
+      {!openMenuFilter && isMobile && (
         <S.ContainerInputSearch>
           <S.RowInputSearch>
             <S.RefreshIcon

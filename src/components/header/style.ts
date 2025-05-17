@@ -12,7 +12,7 @@ export const Container = styled.div`
   @media (min-width: 768px) {
     justify-content: space-between;
     padding: 0 80px;
-    box-shadow: var(--box-shadow-1);
+    box-shadow: var(--box-shadow-2);
   }
 `;
 

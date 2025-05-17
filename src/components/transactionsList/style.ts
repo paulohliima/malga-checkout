@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { SlRefresh } from "react-icons/sl";
+import { MdOutlinePayments } from "react-icons/md";
 import { Box } from "@mui/material";
 
 export const Container = styled.div`
@@ -12,7 +13,9 @@ export const Container = styled.div`
 
   @media (min-width: 768px) {
     padding-top: 80px;
-    box-shadow: var(--box-shadow-2);
+    box-shadow: var(--box-shadow-1);
+    min-width: 700px;
+    background-color: var(--color-brand-6);
   }
 `;
 
@@ -31,16 +34,14 @@ export const RowInputSearch = styled.div`
 
 export const TitleBox = styled(Box)`
   display: flex;
-
   width: 100%;
   justify-content: center;
-  padding-right: 10px;
 
   div {
     svg {
       background-color: var(--color-profile-1);
       color: white;
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 6px;
       font-size: 40px;
       margin-right: 12px;
@@ -54,13 +55,19 @@ export const TitleBox = styled(Box)`
 `;
 
 export const Title = styled.h2`
-  font-family: var(--inter);
+  font-family: var(--lexend);
+  font-weight: var(--font-weight-300);
   font-size: var(--font-size-28);
-  color: var(--grey-1);
+  color: var(--grey-2);
   margin: auto 0;
 
   @media (min-width: 768px) {
-    padding-top: 20px;
+    font-size: var(--font-size-32);
+    font-weight: var(--font-weight-200);
+    padding-top: 30px;
+  }
+  @media (min-width: 1024px) {
+    font-size: var(--font-size-36);
   }
 `;
 
@@ -116,5 +123,15 @@ export const RefreshIcon = styled(SlRefresh)<{ $loading?: boolean }>`
     100% {
       transform: rotate(-360deg);
     }
+  }
+`;
+
+export const IconTransactions = styled(MdOutlinePayments)`
+  @media (min-width: 768px) {
+    position: absolute;
+    top: -30px;
+    left: 20px;
+    width: 80px;
+    height: 80px;
   }
 `;

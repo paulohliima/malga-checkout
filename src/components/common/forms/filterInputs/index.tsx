@@ -5,14 +5,19 @@ import CustomButton from "../../button";
 import CustomInput from "../../input";
 import { useTransactions } from "@/providers/transactionsProvider";
 import { useLoading } from "@/providers/loadingProvider";
+import { transactionsService } from "@/services/transactionsService";
+import { toast } from "react-toastify";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 interface IFilterInputs {
   handleClearFilter: () => void;
 }
 
 const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
-  const { setLoading } = useLoading();
-  const { allTransactions, setTransactionsValues } = useTransactions();
+  const isMobile = useMediaQuery();
+  const { loading, setLoading } = useLoading();
+  const { allTransactions, setTransactionsValues, setPageValues } =
+    useTransactions();
 
   const [filters, setFilters] = useState({
     typeFilter: "id",
@@ -38,14 +43,28 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
     { value: "ticket", label: "Boleto" },
   ];
 
+  const handleRefreshList = async () => {
+    try {
+      const data = await transactionsService.getAll({ page: 1 });
+      setLoading(true);
+      setTimeout(() => {
+        setTransactionsValues(data);
+        setPageValues((prev) => ({
+          ...prev,
+          currentPage: 1,
+        }));
+        setLoading(false);
+      }, 400);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+      } else {
+        toast.error("Erro desconhecido");
+      }
+    }
+  };
+
   const handleClearValuesFilter = () => {
-    setTransactionsValues(allTransactions);
-    setFilters({
-      typeFilter: "id",
-      inputValue: "",
-      status: "",
-      method: "",
-    });
     handleClearFilter();
   };
 
@@ -70,7 +89,6 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
     }
 
     setLoading(true);
-    handleClearFilter();
     setTimeout(() => {
       setTransactionsValues(filtered);
       setLoading(false);
@@ -115,18 +133,34 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
       </S.InputsContainer>
 
       <S.Row>
-        <CustomButton
-          variant="outlined"
-          label="Buscar"
-          color="#006f7d"
-          onClick={handleSearchFilter}
-        />
-        <CustomButton
-          variant="text"
-          label="Limpar Filtros"
-          color="#006f7d"
-          onClick={handleClearValuesFilter}
-        />
+        <S.ButtonsContainer>
+          <CustomButton
+            variant="outlined"
+            label="Buscar"
+            color="#006f7d"
+            onClick={handleSearchFilter}
+          />
+          <CustomButton
+            variant="text"
+            label="Limpar Filtros"
+            color="#006f7d"
+            onClick={handleClearValuesFilter}
+          />
+        </S.ButtonsContainer>
+        {!isMobile && (
+          <S.RefreshContainer onClick={handleRefreshList}>
+            <S.RefreshIcon
+              $loading={loading}
+              style={{
+                width: "30px",
+                height: "30px",
+                color: "var(--color-profile-2)",
+                alignSelf: "end",
+              }}
+            />
+            <S.RefreshLabel>Atualizar</S.RefreshLabel>
+          </S.RefreshContainer>
+        )}
       </S.Row>
     </S.Container>
   );

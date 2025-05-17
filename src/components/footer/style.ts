@@ -18,4 +18,7 @@ export const Text = styled.h3`
   @media (min-width: 500px) {
     font-size: var(--font-size-14);
   }
+  @media (min-width: 768px) {
+    font-size: var(--font-size-18);
+  }
 `;

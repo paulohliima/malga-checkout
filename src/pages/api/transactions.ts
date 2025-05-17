@@ -15,6 +15,19 @@ export default function handler(
   >
 ) {
   if (req.method === "GET") {
+    const { page } = req.query;
+
+    if (page !== undefined) {
+      const pageNumber = parseInt(page as string, 10);
+      const limit = 5;
+
+      const startIndex = (pageNumber - 1) * limit;
+      const endIndex = pageNumber * limit;
+
+      const paginatedTransactions = transactions.slice(startIndex, endIndex);
+      return res.status(200).json(paginatedTransactions);
+    }
+
     return res.status(200).json(transactions);
   }
 
