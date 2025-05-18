@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const Container = styled.button`
   display: inline-block;
-  padding: 6px 12px;
+  padding: 2px 12px;
   border: 1px solid #4f4f4f;
-  border-radius: 4px;
-  font-size: 19px;
+  border-radius: 8px;
+  font-size: var(--font-size-16);
+  line-height: 1.75;
   cursor: pointer;
   color: var(--color-profile-1);
   position: relative;
@@ -14,6 +15,7 @@ export const Container = styled.button`
   background-color: transparent;
   transition: all 0.2s ease-in;
   border: 1px solid var(--color-profile-1);
+  max-width: max-content;
 
   &::before,
   &::after {
@@ -40,23 +42,23 @@ export const Container = styled.button`
     width: 160%;
     height: 190%;
     transform: translateX(-50%) scaleY(1) scaleX(1.45);
-    background-color: #39bda7;
+    background-color: var(--color-profile-1);
   }
 
   &:hover {
     color: #ffffff;
-    border-color: #39bda7;
+    border-color: var(--color-profile-1);
   }
 
   &:hover::before {
     top: -35%;
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
-    background-color: #39bda7;
+    background-color: var(--color-profile-1);
   }
 
   &:hover::after {
     top: -45%;
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
-    background-color: #39bda7;
+    background-color: var(--color-profile-1);
   }
 `;

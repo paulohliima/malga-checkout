@@ -90,9 +90,12 @@ export const RootVariables = createGlobalStyle`
         --color-profile-3: #006f7d;
 
         //FONTS-SIZE
+        --font-size-8: 8px;
+        --font-size-10: 10px;
         --font-size-12: 12px;
         --font-size-14: 14px;
         --font-size-16: 16px;
+        --font-size-18: 18px;
         --font-size-20: 20px;
         --font-size-24: 24px;
         --font-size-28: 28px;
@@ -111,8 +114,9 @@ export const RootVariables = createGlobalStyle`
 
 
         //FONTS
-        --inter: Inter;
-        --lexend: Lexend, sans-serif;
+        --inter: "Inter";
+        --lexend: "Lexend", sans-serif;
+        --lexend-exa: "Lexend Exa", sans-serif;
         --pacifico: "Pacifico", cursive;
 
         //BOX-SHADOW

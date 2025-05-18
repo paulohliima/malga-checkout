@@ -2,15 +2,18 @@ import { useEffect, useState } from "react";
 import * as S from "./style";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonIcon from "@mui/icons-material/Person";
+
+import { MdOutlineAttachMoney } from "react-icons/md";
 import { MdOutlineExitToApp } from "react-icons/md";
 
 import { useRouter } from "next/router";
 import Logo from "../logo";
+import { useAuthenticate } from "@/hooks/useAuthenticated";
 
 const SideBar = () => {
   const router = useRouter();
   const isMobile = useMediaQuery();
+  const { logout, login } = useAuthenticate();
 
   useEffect(() => {
     if (isOpen) {
@@ -37,16 +40,19 @@ const SideBar = () => {
 
   const handleDashboard = () => {
     toggleMenu();
+    login();
     router.push("/transactions");
   };
 
   const handleClient = () => {
     toggleMenu();
+    login();
     router.push("/checkout");
   };
 
   const handleLogout = () => {
     toggleMenu();
+    logout();
     router.push("/");
   };
 
@@ -71,13 +77,13 @@ const SideBar = () => {
               <DashboardIcon
                 style={{ marginRight: 8, width: "30px", height: "30px" }}
               />{" "}
-              Área de Gestão
+              Painel de Gestão
             </li>
             <li onClick={handleClient}>
-              <PersonIcon
+              <MdOutlineAttachMoney
                 style={{ marginRight: 8, width: "30px", height: "30px" }}
               />
-              Área de Pagamento
+              Checkout
             </li>
           </S.Column>
           <li onClick={handleLogout} style={{ marginTop: "auto" }}>

@@ -10,8 +10,8 @@ interface MenuButtonProps {
 
 export const MobileHeader = styled.div`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 25px;
+  right: 25px;
   z-index: 1100;
 `;
 
@@ -103,11 +103,6 @@ export const Menu = styled.ul`
     justify-content: center;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-      background-color: #3a3a3a;
-    }
   }
 `;
 

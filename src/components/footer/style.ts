@@ -22,3 +22,15 @@ export const Text = styled.h3`
     font-size: var(--font-size-18);
   }
 `;
+
+export const Bold = styled.span`
+  font-size: var(--font-size-12);
+  font-weight: bold;
+
+  @media (min-width: 500px) {
+    font-size: var(--font-size-14);
+  }
+  @media (min-width: 768px) {
+    font-size: var(--font-size-18);
+  }
+`;
