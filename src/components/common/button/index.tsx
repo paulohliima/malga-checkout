@@ -29,7 +29,7 @@ const CustomButton: React.FC<IButtonProps> = ({
   label,
   onClick,
   variant = "contained",
-  color = "inherit",
+  color,
   size = "medium",
   iconType,
   padding = "4px 12px",
@@ -69,8 +69,13 @@ const CustomButton: React.FC<IButtonProps> = ({
           sx={{
             width: "max-content",
             padding,
+            textTransform: "capitalize",
             minWidth: "10px",
-            color,
+            color: color ? color : "#fff",
+            backgroundColor:
+              variant === "text" || variant === "outlined"
+                ? "none"
+                : "var(--color-profile-1)",
             borderColor: color,
             border:
               variant === "text"
@@ -79,7 +84,7 @@ const CustomButton: React.FC<IButtonProps> = ({
                 ? "1px solid var(--color-profile-3)"
                 : "none",
             transition: "0.2s ease-in",
-            borderRadius: variant === "text" ? "none" : "12px",
+            borderRadius: variant === "text" ? "none" : "7px",
             "&:hover":
               variant === "text"
                 ? {

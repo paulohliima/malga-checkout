@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface IPropsLogo {
-  fontSize: "small" | "medium";
+  fontSize: "small" | "medium" | "large";
 }
 
 export const ContainerLogo = styled.div<{ $marginBotton?: string }>`
@@ -17,6 +17,8 @@ export const Logo = styled.h2<IPropsLogo>`
   font-size: ${(props) =>
     props.fontSize === "medium"
       ? "var(--font-size-24)"
+      : props.fontSize === "large"
+      ? "var(--font-size-36)"
       : "var(--font-size-12)"};
   font-family: var(--pacifico);
   font-weight: 400;
@@ -27,6 +29,8 @@ export const LogoDecoration = styled.h2<IPropsLogo>`
   font-size: ${(props) =>
     props.fontSize === "medium"
       ? "var(--font-size-28)"
+      : props.fontSize === "large"
+      ? "var(--font-size-44)"
       : "var(--font-size-14)"};
   font-family: var(--pacifico);
   font-weight: 400;

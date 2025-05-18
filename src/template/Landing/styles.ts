@@ -4,6 +4,123 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding-top: 80px;
+  padding: 80px 20px 0 20px;
   background-color: var(--color-brand-5);
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row-reverse;
+    justify-content: space-around;
+  }
+`;
+
+export const ContainerText = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  height: max-content;
+  padding: 30px 0;
+`;
+
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    max-width: 500px;
+  }
+  @media (min-width: 1300px) {
+    max-width: 600px;
+  }
+`;
+
+export const ColumnText = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: start;
+  padding-bottom: 60px;
+  max-width: 400px;
+
+  @media (min-width: 500px) {
+    max-width: 480px;
+  }
+  @media (min-width: 768px) {
+    max-width: 400px;
+  }
+  @media (min-width: 1300px) {
+    max-width: 500px;
+  }
+`;
+
+export const Row = styled.div`
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
+  justify-content: start;
+`;
+
+export const ImageLanding = styled.img`
+  width: 100%;
+  min-width: 390px;
+  max-width: 400px;
+  padding: 20px 0;
+
+  @media (min-width: 500px) {
+    padding: 0;
+  }
+  @media (min-width: 768px) {
+    max-width: 500px;
+  }
+  @media (min-width: 1300px) {
+    max-width: 600px;
+  }
+`;
+
+export const Text = styled.p`
+  font-family: var(--lexend);
+  font-size: var(--font-size-18);
+  font-weight: 500;
+  color: var(--color-profile-2);
+  line-height: 1.6;
+  margin: 0;
+  text-align: start;
+
+  @media (min-width: 500px) {
+    font-size: var(--font-size-24);
+  }
+  @media (min-width: 768px) {
+    font-size: var(--font-size-20);
+  }
+  @media (min-width: 1300px) {
+    font-size: var(--font-size-24);
+  }
+`;
+
+export const TypeWritter = styled.div`
+  display: flex;
+  gap: 2px;
+
+  .Typewriter__wrapper {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: var(--font-size-18);
+    font-family: var(--lexend-exa);
+    font-weight: bold;
+    color: var(--color-profile-2);
+    line-height: 1.6;
+    margin: 0;
+    text-align: center;
+    @media (min-width: 500px) {
+      font-size: var(--font-size-28);
+    }
+    @media (min-width: 768px) {
+      font-size: var(--font-size-20);
+    }
+    @media (min-width: 1300px) {
+      font-size: var(--font-size-28);
+    }
+  }
 `;

@@ -1,7 +1,7 @@
 import * as S from "./style";
 
 interface ILogo {
-  fontSize?: "small" | "medium";
+  fontSize?: "small" | "medium" | "large";
   onClick?: () => void;
   marginBotton?: string;
 }

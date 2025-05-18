@@ -88,6 +88,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
   const handleClearFilter = () => {
     setTransactionsValues(transactionsPaginated);
     setInputValueId("");
+    setOpenMenuFilter(false);
     setSearchedValue(false);
     setSelectFilterByStatus("");
     setPageValues((prev) => ({
@@ -121,6 +122,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
           setLoading(false);
         }, 300);
         setSearchedValue(true);
+        setOpenMenuFilter(false);
         setSelectFilterByStatus("authorized");
         setTransactionsValues(transactionsFilteredById);
         break;
@@ -133,6 +135,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
           setLoading(false);
         }, 300);
         setSearchedValue(true);
+        setOpenMenuFilter(false);
         setSelectFilterByStatus("failed");
         setTransactionsValues(transactionsFilteredById);
         break;
