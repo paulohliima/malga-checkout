@@ -18,7 +18,7 @@ export const SectionTitle = styled.h3`
 export const InfoGroup = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
 `;
 
 export const Label = styled.span`

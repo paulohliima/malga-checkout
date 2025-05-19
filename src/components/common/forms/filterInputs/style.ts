@@ -7,9 +7,19 @@ export const Container = styled.div`
   gap: 10px;
   margin-bottom: 10px;
   align-items: center;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  justify-content: center;
+  width: 100%;
 
   @media (min-width: 1024px) {
-    align-items: stretch;
+    box-shadow: var(--box-shadow-1);
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
   }
 `;
 
@@ -26,8 +36,8 @@ export const InputsContainer = styled.div`
   }
 
   @media (min-width: 1024px) {
-    justify-content: flex-start;
-    gap: 20px;
+    padding-top: 15px;
+    gap: 10px;
   }
 `;
 
@@ -51,11 +61,14 @@ export const RefreshContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   gap: 5px;
   cursor: pointer;
 
   @media (min-width: 1024px) {
-    margin-left: 20px;
+    justify-content: end;
+    padding-right: 20px;
+    padding: 20px 0;
   }
 `;
 
@@ -96,6 +109,7 @@ export const ButtonsContainer = styled.div`
 
   @media (min-width: 1024px) {
     flex-wrap: nowrap;
+    flex-direction: row-reverse;
   }
 `;
 

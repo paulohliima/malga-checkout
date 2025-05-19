@@ -73,17 +73,21 @@ const CustomTable = ({ transactions }: ICustomTable) => {
       <TableContainer
         sx={{
           overflowX: "auto",
-          maxWidth: "900px",
+          maxWidth: "1000px",
           minHeight: "600px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#fff",
-          borderRadius: "4px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
         }}
       >
-        <Table size={"small"}>
+        <Table
+          size={"small"}
+          sx={{
+            borderSpacing: "0 4px",
+            borderCollapse: "separate",
+          }}
+        >
           <TableHead>
             <TableRow
               sx={{
@@ -97,7 +101,8 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                   fontSize: "16px",
                   color: "var(--color-white)",
                   borderBottom: "2px solid #e0e0e0",
-                  padding: "12px",
+                  padding: "16px",
+                  borderRadius: "6px 0 0 6px",
                 }}
               >
                 Id
@@ -135,6 +140,7 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                   color: "var(--color-white)",
                   borderBottom: "2px solid #e0e0e0",
                   padding: "12px",
+                  borderRadius: "0 6px 6px 0",
                 }}
               >
                 Opções
@@ -143,10 +149,10 @@ const CustomTable = ({ transactions }: ICustomTable) => {
           </TableHead>
           <TableBody>
             {loading ? (
-              Array.from({ length: 10 }).map((_, i) => (
+              transactions.map((_, i) => (
                 <TableRow key={`skeleton-${i}`}>
                   <TableCell colSpan={4}>
-                    <Skeleton variant="rounded" height={41.6} />
+                    <Skeleton variant="rounded" height={50} />
                   </TableCell>
                 </TableRow>
               ))
@@ -164,21 +170,23 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                     <TableRow
                       key={transaction.id}
                       sx={{
+                        backgroundColor: "#fff",
+                        boxShadow: "0 2px 12px rgba(0, 0, 0, 0.05)",
                         transition: "all 0.2s ease",
                         cursor: "pointer",
                         "&:hover": {
-                          backgroundColor: "rgba(0, 0, 0, 0.03)",
+                          backgroundColor: "rgba(0, 0, 0, 0.02)",
                           transform: "scale(1.01)",
-                          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                          zIndex: 1,
+                          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
                         },
                       }}
                     >
                       <TableCell
                         align="center"
                         sx={{
-                          whiteSpace: "nowrap",
                           fontSize: "var(--font-size-20)",
+                          padding: "16px",
+                          borderRadius: "6px 0 0 6px",
                         }}
                       >
                         {transaction.id}
@@ -220,7 +228,10 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{ fontSize: "var(--font-size-20)" }}
+                        sx={{
+                          fontSize: "var(--font-size-20)",
+                          borderRadius: "0px 6px 6px 0px",
+                        }}
                       >
                         <Box
                           sx={{

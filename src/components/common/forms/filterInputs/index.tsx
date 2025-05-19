@@ -101,7 +101,21 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
 
   return (
     <S.Container>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {!isMobile && (
+        <S.RefreshContainer onClick={handleRefreshList}>
+          <S.RefreshIcon
+            $loading={loading}
+            style={{
+              width: "30px",
+              height: "30px",
+              color: "var(--color-profile-2)",
+              alignSelf: "end",
+            }}
+          />
+          <S.RefreshLabel>Atualizar Lista</S.RefreshLabel>
+        </S.RefreshContainer>
+      )}
+      <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.FiltersWrapper>
           <S.InputsContainer>
             <Controller
@@ -192,24 +206,9 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
                 onClick={handleClearValuesFilter}
               />
             </S.ButtonsContainer>
-
-            {!isMobile && (
-              <S.RefreshContainer onClick={handleRefreshList}>
-                <S.RefreshIcon
-                  $loading={loading}
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    color: "var(--color-profile-2)",
-                    alignSelf: "end",
-                  }}
-                />
-                <S.RefreshLabel>Atualizar</S.RefreshLabel>
-              </S.RefreshContainer>
-            )}
           </S.Row>
         </S.FiltersWrapper>
-      </form>
+      </S.Form>
     </S.Container>
   );
 };
