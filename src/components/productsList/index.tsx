@@ -1,41 +1,29 @@
+import * as S from "./style";
+import useTranslate from "@/hooks/useTranslate";
 import { IItem } from "@/interfaces/transactions";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
 
 interface IProductsList {
   products: IItem[];
 }
 
 const ProductsList = ({ products }: IProductsList) => {
+  const { convertCurrency } = useTranslate();
+
   return (
-    <TableContainer sx={{ overflowX: "auto" }}>
-      <Table size="medium">
-        <TableHead>
-          <TableRow>
-            <TableCell>Quantidade</TableCell>
-            <TableCell sx={{ width: "200px", whiteSpace: "nowrap" }}>
-              Produto
-            </TableCell>
-            <TableCell sx={{ width: "220px" }}>Preço</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {products.map((product: IItem, index) => (
-            <TableRow key={index}>
-              <TableCell>{product.quantity}</TableCell>
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{product.amount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <S.Container>
+      <S.Title>Resumo da Compra</S.Title>
+      <S.ItemList>
+        {products.map((item, index) => (
+          <S.Item key={index}>
+            <div>
+              <S.ProductName>{item.name}</S.ProductName>
+              <S.Quantity>Quantidade: {item.quantity}</S.Quantity>
+            </div>
+            <S.Price>{convertCurrency(item.amount)}</S.Price>
+          </S.Item>
+        ))}
+      </S.ItemList>
+    </S.Container>
   );
 };
 

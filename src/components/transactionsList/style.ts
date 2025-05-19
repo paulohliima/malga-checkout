@@ -12,16 +12,16 @@ export const Container = styled.div`
   color: var(--grey-1);
 
   @media (min-width: 768px) {
-    padding-top: 80px;
-    box-shadow: var(--box-shadow-1);
     min-width: 700px;
-    background-color: var(--color-brand-6);
+  }
+  @media (min-width: 1024px) {
+    min-width: 1000px;
   }
 `;
 
 export const Row = styled.div`
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
   width: 100%;
 `;
@@ -47,11 +47,6 @@ export const TitleBox = styled(Box)`
       margin-right: 12px;
     }
   }
-
-  @media (min-width: 768px) {
-    top: -10px;
-    position: absolute;
-  }
 `;
 
 export const Title = styled.h2`
@@ -63,7 +58,6 @@ export const Title = styled.h2`
 
   @media (min-width: 768px) {
     font-size: var(--font-size-32);
-    font-weight: var(--font-weight-200);
     padding-top: 30px;
   }
   @media (min-width: 1024px) {
@@ -127,11 +121,7 @@ export const RefreshIcon = styled(SlRefresh)<{ $loading?: boolean }>`
 `;
 
 export const IconTransactions = styled(MdOutlinePayments)`
-  @media (min-width: 768px) {
-    position: absolute;
-    top: -30px;
-    left: 20px;
-    width: 80px;
-    height: 80px;
+  @media (min-width: 1024px) {
+    display: none;
   }
 `;

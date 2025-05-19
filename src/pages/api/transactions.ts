@@ -18,7 +18,7 @@ export default function handler(
 
     if (page !== undefined) {
       const pageNumber = parseInt(page as string, 10);
-      const limit = 5;
+      const limit = 10;
 
       const startIndex = (pageNumber - 1) * limit;
       const endIndex = pageNumber * limit;

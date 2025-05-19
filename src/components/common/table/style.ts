@@ -4,9 +4,8 @@ import { Box } from "@mui/material";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 600px;
-  margin: 0 auto;
   min-height: 335px;
+  align-items: center;
 `;
 
 export const TitleBox = styled(Box)`

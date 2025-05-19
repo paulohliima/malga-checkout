@@ -4,7 +4,8 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding: 16px;
-  max-width: 600px;
+  max-width: 700px;
+  min-height: 665px;
   margin: auto;
   font-family: var(--inter);
   align-items: center;
@@ -46,6 +47,13 @@ export const InfoBox = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 60px 0;
+  gap: 20px;
+  width: 400px;
+
+  @media (min-width: 768px) {
+    padding: 80px 0;
+  }
 `;
 
 export const InfoIcon = styled.span`
@@ -55,7 +63,7 @@ export const InfoIcon = styled.span`
 
 export const InfoText = styled.p`
   font-size: 14px;
-  color: #333;
+  text-align: center;
   margin: 0;
 `;
 
@@ -103,4 +111,71 @@ export const CardName = styled.h3`
 `;
 export const CardExpiration = styled.h3`
   display: flex;
+`;
+
+export const ContainerInputs = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+  }
+`;
+
+export const ContainerForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  @media (min-width: 768px) {
+    min-height: 262px;
+  }
+`;
+
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+export const FooterButtons = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+  align-items: center;
+  justify-content: end;
+  margin-top: auto;
+  gap: 20px;
+  padding-top: 10px;
+
+  @media (min-width: 560px) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+
+  button {
+    width: 345px;
+
+    @media (min-width: 560px) {
+      width: 200px;
+    }
+  }
+`;
+
+export const ContainerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  @media (min-width: 768px) {
+    min-height: 492px;
+  }
 `;

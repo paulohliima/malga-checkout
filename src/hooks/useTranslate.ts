@@ -1,5 +1,5 @@
 const useTranslate = () => {
-  const getPaymentMethodInfo = (type: string) => {
+  const getPaymentMethodInfo = (type: string | undefined) => {
     switch (type) {
       case "card":
         return {
@@ -44,7 +44,16 @@ const useTranslate = () => {
     }
   };
 
-  return { getPaymentMethodInfo, getStatusInfo };
+  const convertCurrency = (value: number) => {
+    const valueConverted = value.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 2,
+    });
+    return valueConverted;
+  };
+
+  return { getPaymentMethodInfo, getStatusInfo, convertCurrency };
 };
 
 export default useTranslate;

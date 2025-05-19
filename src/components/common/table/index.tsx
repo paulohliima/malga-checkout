@@ -18,7 +18,6 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import TransactionDetailModal from "@/components/modals/transactionDetail";
 import useTranslate from "@/hooks/useTranslate";
-import useMediaQuery from "@/hooks/useMediaQuery";
 import { useTransactions } from "@/providers/transactionsProvider";
 import { useLoading } from "@/providers/loadingProvider";
 
@@ -27,7 +26,6 @@ interface ICustomTable {
 }
 
 const CustomTable = ({ transactions }: ICustomTable) => {
-  const isLaptop = useMediaQuery(1024);
   const { loading } = useLoading();
   const { getStatusInfo, getPaymentMethodInfo } = useTranslate();
   const { setTransactionsValues, allTransactions, pageValues, setPageValues } =
@@ -47,7 +45,7 @@ const CustomTable = ({ transactions }: ICustomTable) => {
       setTransactionsValues(response);
       setPageValues(() => ({
         currentPage: newPage,
-        totalPages: Math.ceil(allTransactions.length / 5),
+        totalPages: Math.ceil(allTransactions.length / 10),
       }));
     } catch (e) {
       console.error("Erro ao mudar de página:", e);
@@ -75,43 +73,86 @@ const CustomTable = ({ transactions }: ICustomTable) => {
       <TableContainer
         sx={{
           overflowX: "auto",
-          maxWidth: isLaptop ? "600px" : "1000px",
+          maxWidth: "900px",
+          minHeight: "600px",
           display: "flex",
           flexDirection: "column",
-          minHeight: isLaptop ? "320px" : "480px",
+          justifyContent: "space-between",
+          backgroundColor: "#fff",
+          borderRadius: "4px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
         }}
       >
-        <Table size={isLaptop ? "small" : "medium"}>
+        <Table size={"small"}>
           <TableHead>
-            <TableRow>
-              <TableCell align="center" sx={{ width: "50px" }}>
+            <TableRow
+              sx={{
+                backgroundColor: "var(--color-profile-2)",
+              }}
+            >
+              <TableCell
+                align="center"
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  color: "var(--color-white)",
+                  borderBottom: "2px solid #e0e0e0",
+                  padding: "12px",
+                }}
+              >
                 Id
               </TableCell>
-              <TableCell align="center" sx={{ width: "100px" }}>
+              <TableCell
+                align="center"
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  color: "var(--color-white)",
+                  borderBottom: "2px solid #e0e0e0",
+                  padding: "12px",
+                }}
+              >
                 Status
               </TableCell>
               <TableCell
                 align="center"
-                sx={{ width: "250px", whiteSpace: "nowrap" }}
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  color: "var(--color-white)",
+                  borderBottom: "2px solid #e0e0e0",
+                  padding: "12px",
+                  whiteSpace: "nowrap",
+                }}
               >
                 Método de Pagamento
               </TableCell>
-
-              <TableCell align="center" sx={{ width: "100px" }}>
+              <TableCell
+                align="center"
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  color: "var(--color-white)",
+                  borderBottom: "2px solid #e0e0e0",
+                  padding: "12px",
+                }}
+              >
                 Opções
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {loading
-              ? Array.from({ length: 5 }).map((_, i) => (
-                  <TableRow key={`skeleton-${i}`}>
-                    <TableCell colSpan={4}>
-                      <Skeleton variant="rounded" height={38} />
-                    </TableCell>
-                  </TableRow>
-                ))
-              : transactions.map((transaction: ITransactionResponse) => {
+            {loading ? (
+              Array.from({ length: 10 }).map((_, i) => (
+                <TableRow key={`skeleton-${i}`}>
+                  <TableCell colSpan={4}>
+                    <Skeleton variant="rounded" height={41.6} />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <>
+                {transactions.map((transaction: ITransactionResponse) => {
                   const { status, statusColor } = getStatusInfo(
                     transaction.status
                   );
@@ -137,20 +178,14 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                         align="center"
                         sx={{
                           whiteSpace: "nowrap",
-                          fontSize: isLaptop
-                            ? "var(--font-size-16)"
-                            : "var(--font-size-20)",
+                          fontSize: "var(--font-size-20)",
                         }}
                       >
                         {transaction.id}
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{
-                          fontSize: isLaptop
-                            ? "var(--font-size-16)"
-                            : "var(--font-size-20)",
-                        }}
+                        sx={{ fontSize: "var(--font-size-20)" }}
                       >
                         <Box
                           sx={{
@@ -160,7 +195,7 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                             padding: "2px 8px",
                             display: "inline-block",
                             fontWeight: 500,
-                            fontSize: isLaptop ? "12px" : "14px",
+                            fontSize: "14px",
                             textTransform: "capitalize",
                           }}
                         >
@@ -169,11 +204,7 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{
-                          fontSize: isLaptop
-                            ? "var(--font-size-16)"
-                            : "var(--font-size-20)",
-                        }}
+                        sx={{ fontSize: "var(--font-size-20)" }}
                       >
                         <Box
                           sx={{
@@ -183,21 +214,13 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                             fontFamily: "var(--lexend)",
                           }}
                         >
-                          <S.IconType
-                            src={icon}
-                            alt={label}
-                            $size={isLaptop ? 30 : 38}
-                          />
+                          <S.IconType src={icon} alt={label} $size={38} />
                           {label}
                         </Box>
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{
-                          fontSize: isLaptop
-                            ? "var(--font-size-16)"
-                            : "var(--font-size-20)",
-                        }}
+                        sx={{ fontSize: "var(--font-size-20)" }}
                       >
                         <Box
                           sx={{
@@ -222,6 +245,8 @@ const CustomTable = ({ transactions }: ICustomTable) => {
                     </TableRow>
                   );
                 })}
+              </>
+            )}
           </TableBody>
         </Table>
         <S.FooterTable>

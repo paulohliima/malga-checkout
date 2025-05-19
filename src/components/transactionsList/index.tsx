@@ -1,30 +1,36 @@
 import * as S from "./style";
 
-import { IoOptionsOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { AnimatePresence, motion } from "framer-motion";
+import { Controller, Resolver, useForm } from "react-hook-form";
+
+import { BiError } from "react-icons/bi";
 import { IoIosArrowUp } from "react-icons/io";
-import { TfiStatsUp, TfiStatsDown } from "react-icons/tfi";
+import { IoOptionsOutline } from "react-icons/io5";
+
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 
 import CardList from "../cardList";
-import CustomTable from "../common/table";
-import useMediaQuery from "@/hooks/useMediaQuery";
-import { ITransactionResponse } from "@/interfaces/transactions";
-import FilterInputs from "../common/forms/filterInputs";
-import { useEffect, useState } from "react";
-import { useTransactions } from "@/providers/transactionsProvider";
-import { AnimatePresence, motion } from "framer-motion";
-import { transactionsService } from "@/services/transactionsService";
-import { toast } from "react-toastify";
-import CustomInput from "../common/input";
-import { useLoading } from "@/providers/loadingProvider";
-import CustomButton from "../common/button";
 import InfoCard from "../cards/infoCard";
+import CustomTable from "../common/table";
+import CustomInput from "../common/input";
+import CustomButton from "../common/button";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import FilterInputs from "../common/forms/filterInputs";
+import { useLoading } from "@/providers/loadingProvider";
+import { ITransactionResponse } from "@/interfaces/transactions";
+import { useTransactions } from "@/providers/transactionsProvider";
+import { transactionsService } from "@/services/transactionsService";
+import { FilterSearchData, searchSchema } from "@/schemas/filterSchema";
 
 interface IListTransactions {
   transactions: ITransactionResponse[];
 }
 
 const TransactionsList = ({ transactions }: IListTransactions) => {
-  const isMobile = useMediaQuery();
+  const isMobile = useMediaQuery(1024);
   const { loading, setLoading } = useLoading();
 
   const {
@@ -35,7 +41,6 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
   } = useTransactions();
   const [openMenuFilter, setOpenMenuFilter] = useState(false);
 
-  const [inputValueId, setInputValueId] = useState("");
   const [searchedValue, setSearchedValue] = useState(false);
 
   const [countStatsValues, setCountStatsValues] = useState({
@@ -87,7 +92,6 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
 
   const handleClearFilter = () => {
     setTransactionsValues(transactionsPaginated);
-    setInputValueId("");
     setOpenMenuFilter(false);
     setSearchedValue(false);
     setSelectFilterByStatus("");
@@ -95,11 +99,14 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
       ...prev,
       currentPage: 1,
     }));
+    reset();
   };
 
-  const handleSearchById = () => {
+  const handleSearchById = (data: FilterSearchData) => {
+    const { inputValue } = data;
+
     const transactionsFilteredById = allTransactions.filter(
-      (tx) => tx.id === inputValueId
+      (tx) => tx.id === inputValue
     );
     setLoading(true);
     setTimeout(() => {
@@ -148,6 +155,13 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
     setOpenMenuFilter(!openMenuFilter);
   };
 
+  const { handleSubmit, control, reset } = useForm<FilterSearchData>({
+    resolver: yupResolver(searchSchema) as Resolver<FilterSearchData>,
+    defaultValues: {
+      inputValue: "",
+    },
+  });
+
   return (
     <S.Container>
       <S.TitleBox>
@@ -170,7 +184,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
             <S.ContainerCardsInfo>
               <InfoCard
                 label="Autorizados:"
-                icon={<TfiStatsUp />}
+                icon={<IoIosCheckmarkCircleOutline />}
                 value={countStatsValues.authorized}
                 type="success"
                 selected={selectFilterByStatus === "authorized"}
@@ -178,7 +192,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
               />
               <InfoCard
                 label="Bloqueados:"
-                icon={<TfiStatsDown />}
+                icon={<BiError />}
                 value={countStatsValues.failed}
                 type="failed"
                 selected={selectFilterByStatus === "failed"}
@@ -204,25 +218,6 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
         ) : (
           !isMobile && (
             <>
-              <S.ContainerCardsInfo>
-                <InfoCard
-                  label="Autorizados:"
-                  icon={<TfiStatsUp />}
-                  value={countStatsValues.authorized}
-                  type="success"
-                  selected={selectFilterByStatus === "authorized"}
-                  onClick={() => handleSelectFilterStatus("authorized")}
-                />
-                <InfoCard
-                  label="Bloqueados:"
-                  icon={<TfiStatsDown />}
-                  value={countStatsValues.failed}
-                  type="failed"
-                  selected={selectFilterByStatus === "failed"}
-                  onClick={() => handleSelectFilterStatus("failed")}
-                />
-              </S.ContainerCardsInfo>
-
               <FilterInputs handleClearFilter={handleClearFilter} />
 
               {isMobile && <S.Divider />}
@@ -259,13 +254,23 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
               }}
             />
             <S.Column>
-              <CustomInput
-                label="Buscar pelo Id"
-                value={inputValueId}
-                searchIcon
-                onClickSearchIcon={handleSearchById}
-                onChange={(e) => setInputValueId(e)}
-              />
+              <form onSubmit={handleSubmit(handleSearchById)}>
+                <Controller
+                  name="inputValue"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <CustomInput
+                      label="Buscar pelo ID"
+                      value={field.value ?? ""}
+                      searchIcon
+                      onClickSearchIcon={handleSubmit(handleSearchById)}
+                      onChange={(val: string) => field.onChange(val)}
+                      error={!!fieldState.error}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+              </form>
             </S.Column>
 
             <IoOptionsOutline

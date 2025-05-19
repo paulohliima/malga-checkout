@@ -30,8 +30,13 @@ const CustomSelect = ({
 }: ICustomSelect) => {
   return (
     <S.Container>
-      <FormControl color="success" size="small" fullWidth={fullWidth}>
-        {<InputLabel>{label}</InputLabel>}
+      <FormControl
+        color="success"
+        size="small"
+        fullWidth={fullWidth}
+        sx={{ position: "relative" }}
+      >
+        <InputLabel>{label}</InputLabel>
         <Select
           value={value}
           label={fixedLabelAsPlaceholder && label}
@@ -40,7 +45,8 @@ const CustomSelect = ({
           MenuProps={{
             disableScrollLock: true,
             disablePortal: true,
-            style: { width: "100%" },
+            anchorOrigin: { vertical: "bottom", horizontal: "left" },
+            transformOrigin: { vertical: "top", horizontal: "left" },
           }}
           sx={{
             "& .MuiOutlinedInput-root": {

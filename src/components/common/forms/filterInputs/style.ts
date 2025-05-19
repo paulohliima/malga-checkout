@@ -7,6 +7,10 @@ export const Container = styled.div`
   gap: 10px;
   margin-bottom: 10px;
   align-items: center;
+
+  @media (min-width: 1024px) {
+    align-items: stretch;
+  }
 `;
 
 export const InputsContainer = styled.div`
@@ -20,6 +24,11 @@ export const InputsContainer = styled.div`
   @media (min-width: 560px) {
     flex-direction: row;
   }
+
+  @media (min-width: 1024px) {
+    justify-content: flex-start;
+    gap: 20px;
+  }
 `;
 
 export const Row = styled.div`
@@ -32,6 +41,10 @@ export const Row = styled.div`
     max-width: 500px;
     justify-content: space-between;
   }
+
+  @media (min-width: 1024px) {
+    justify-content: flex-end;
+  }
 `;
 
 export const RefreshContainer = styled.div`
@@ -40,6 +53,10 @@ export const RefreshContainer = styled.div`
   justify-content: center;
   gap: 5px;
   cursor: pointer;
+
+  @media (min-width: 1024px) {
+    margin-left: 20px;
+  }
 `;
 
 export const RefreshIcon = styled(SlRefresh)<{ $loading?: boolean }>`
@@ -76,4 +93,22 @@ export const ButtonsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (min-width: 1024px) {
+    flex-wrap: nowrap;
+  }
+`;
+
+export const FiltersWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;

@@ -1,15 +1,15 @@
-import { ITransactionResponse } from "@/interfaces/transactions";
+import * as S from "./style";
+import { useState } from "react";
+import { Box } from "@mui/material";
+import { toast } from "react-toastify";
 import { TbWindowMaximize } from "react-icons/tb";
 
-import * as S from "./style";
+import useTranslate from "@/hooks/useTranslate";
 import LoadingText from "../../common/loadingText";
 import { useLoading } from "@/providers/loadingProvider";
-import { useState } from "react";
+import { ITransactionResponse } from "@/interfaces/transactions";
 import TransactionDetailModal from "../../modals/transactionDetail";
 import { transactionsService } from "@/services/transactionsService";
-import { toast } from "react-toastify";
-import useTranslate from "@/hooks/useTranslate";
-import { Box } from "@mui/material";
 
 interface ITransactionCard {
   transaction: ITransactionResponse;
@@ -51,7 +51,7 @@ const TransactionCard = ({ transaction }: ITransactionCard) => {
         <S.Column>
           <S.Row>
             {loading ? (
-              <LoadingText width="60px" height="100px" />
+              <LoadingText width="48px" height="80px" />
             ) : (
               <S.MethodIcon src={methodIcon}></S.MethodIcon>
             )}
@@ -83,12 +83,12 @@ const TransactionCard = ({ transaction }: ITransactionCard) => {
               </S.StatusContainer>
               <S.MethodContainerLabel>
                 {loading ? (
-                  <LoadingText width="140px" height="18px" />
+                  <LoadingText width="140px" height="14px" />
                 ) : (
                   <S.Bold>Método de Pagamento:</S.Bold>
                 )}
                 {loading ? (
-                  <LoadingText width="150px" height="22px" />
+                  <LoadingText width="150px" height="18px" />
                 ) : (
                   <S.MethodLabel>{methodLabel}</S.MethodLabel>
                 )}
@@ -100,11 +100,9 @@ const TransactionCard = ({ transaction }: ITransactionCard) => {
           {loading ? (
             <LoadingText width="30px" height="30px" />
           ) : (
-            <S.ContainerIdLabel>
-              <S.IdLabel>
-                <S.Bold>#ID:</S.Bold> {transaction.id}
-              </S.IdLabel>
-            </S.ContainerIdLabel>
+            <S.IdLabel>
+              <S.Bold>#ID:</S.Bold> {transaction.id}
+            </S.IdLabel>
           )}
           {loading ? (
             <LoadingText width="40px" height="80px" />
@@ -113,7 +111,7 @@ const TransactionCard = ({ transaction }: ITransactionCard) => {
               style={{
                 width: "40px",
                 height: "40px",
-                color: "#006f7d",
+                color: "var(--color-profile-2)",
               }}
               onClick={handleOpenDetailsTransaction}
             />

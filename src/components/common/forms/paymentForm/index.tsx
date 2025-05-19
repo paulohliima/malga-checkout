@@ -28,8 +28,10 @@ const PaymentInfoNote = ({ children }: { children: React.ReactNode }) => (
 );
 
 const PaymentForm = ({ handleNext, handleBack }: IPaymentForm) => {
+  const { convertCurrency } = useTranslate();
   const { getPaymentMethodInfo } = useTranslate();
-  const { mockupProducts, payment, setPayment } = useCart();
+
+  const { payment, setPayment, totalAmount } = useCart();
 
   const paymentOptions = [
     { value: "card", label: "Cartão de Crédito" },
@@ -37,17 +39,9 @@ const PaymentForm = ({ handleNext, handleBack }: IPaymentForm) => {
     { value: "ticket", label: "Boleto" },
   ];
 
-  const totalAmount = mockupProducts.reduce((total, item) => {
-    return total + item.amount * item.quantity;
-  }, 0);
-
   const installmentsOptions = Array.from({ length: 6 }, (_, i) => ({
     value: i + 1,
-    label: `${i + 1}x de ${(totalAmount / (i + 1)).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-      minimumFractionDigits: 2,
-    })} Sem Juros`,
+    label: `${i + 1}x de ${convertCurrency(totalAmount / (i + 1))} Sem Juros`,
   }));
 
   const { handleSubmit, control, watch } = useForm<PaymentFormData>({
@@ -144,153 +138,163 @@ const PaymentForm = ({ handleNext, handleBack }: IPaymentForm) => {
           </S.ContainerCreditCard>
         </motion.div>
       )}
-      <S.Label>Formas de Pagamento</S.Label>
-      <Controller
-        name="type"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomSelect
-            label="Selecione o tipo"
-            value={field.value ?? ""}
-            onChange={(val) => field.onChange(val)}
-            options={paymentOptions}
-            fullWidth
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
-          />
-        )}
-      />
+
+      <S.Column>
+        <S.Label>Formas de Pagamento</S.Label>
+        <Controller
+          name="type"
+          control={control}
+          render={({ field, fieldState }) => (
+            <CustomSelect
+              label="Selecione o tipo"
+              value={field.value ?? ""}
+              onChange={(val) => field.onChange(val)}
+              options={paymentOptions}
+              fullWidth
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+              fixedLabelAsPlaceholder
+            />
+          )}
+        />
+      </S.Column>
 
       {selectedType === "card" && (
-        <>
-          <S.Label>Número do Cartão</S.Label>
-          <Controller
-            name="card.number"
-            control={control}
-            render={({ field, fieldState }) => (
-              <CustomInput
-                label="Ex: 4111111111111111"
-                value={field.value ?? ""}
-                onChange={(val) => field.onChange(val)}
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-                fixedLabelAsPlaceholder
-                mask={paymentInputMasks.card.number}
+        <S.ContainerForm>
+          <S.ContainerInputs>
+            <S.Column>
+              <S.Label>Número do Cartão</S.Label>
+              <Controller
+                name="card.number"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <CustomInput
+                    label="Ex: 4111 1111 1111 1111"
+                    value={field.value}
+                    onChange={(val) => field.onChange(val)}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    fixedLabelAsPlaceholder
+                    mask={paymentInputMasks.card.number}
+                  />
+                )}
               />
-            )}
-          />
+            </S.Column>
+            <S.Column>
+              <S.Label>Número de Parcelas</S.Label>
+              <Controller
+                name="card.installments"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <CustomSelect
+                    label="Número de Parcelas"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val)}
+                    options={installmentsOptions}
+                    fullWidth
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    fixedLabelAsPlaceholder
+                  />
+                )}
+              />
+            </S.Column>
+          </S.ContainerInputs>
 
-          <S.Label>Número de Parcelas</S.Label>
-          <Controller
-            name="card.installments"
-            control={control}
-            render={({ field, fieldState }) => (
-              <CustomSelect
-                label="Número de Parcelas"
-                value={field.value ?? ""}
-                onChange={(val) => field.onChange(val)}
-                options={installmentsOptions}
-                fullWidth
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-                fixedLabelAsPlaceholder
-              />
-            )}
-          />
+          <S.Column>
+            <S.Label>Nome do Titular</S.Label>
+            <Controller
+              name="card.holderName"
+              control={control}
+              render={({ field, fieldState }) => (
+                <CustomInput
+                  label="Ex: João Silva"
+                  value={field.value ?? ""}
+                  onChange={(val) => field.onChange(val)}
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                  fixedLabelAsPlaceholder
+                />
+              )}
+            />
+          </S.Column>
 
-          <S.Label>Nome do Titular</S.Label>
-          <Controller
-            name="card.holderName"
-            control={control}
-            render={({ field, fieldState }) => (
-              <CustomInput
-                label="Ex: João Silva"
-                value={field.value ?? ""}
-                onChange={(val) => field.onChange(val)}
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-                fixedLabelAsPlaceholder
+          <S.ContainerInputs>
+            <S.Column>
+              <S.Label>CVV</S.Label>
+              <Controller
+                name="card.cvv"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <CustomInput
+                    label="Ex: 123"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val)}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    fixedLabelAsPlaceholder
+                    mask={paymentInputMasks.card.cvv}
+                  />
+                )}
               />
-            )}
-          />
-
-          <S.Label>CVV</S.Label>
-          <Controller
-            name="card.cvv"
-            control={control}
-            render={({ field, fieldState }) => (
-              <CustomInput
-                label="Ex: 123"
-                value={field.value ?? ""}
-                onChange={(val) => field.onChange(val)}
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-                fixedLabelAsPlaceholder
-                mask={paymentInputMasks.card.cvv}
+            </S.Column>
+            <S.Column>
+              <S.Label>Data de Expiração</S.Label>
+              <Controller
+                name="card.expirationDate"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <CustomInput
+                    label="Ex: 12/2025"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val)}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    fixedLabelAsPlaceholder
+                    mask={paymentInputMasks.card.expirationDate}
+                  />
+                )}
               />
-            )}
-          />
-
-          <S.Label>Data de Expiração (MM/YYYY)</S.Label>
-          <Controller
-            name="card.expirationDate"
-            control={control}
-            render={({ field, fieldState }) => (
-              <CustomInput
-                label="Ex: 12/2025"
-                value={field.value ?? ""}
-                onChange={(val) => field.onChange(val)}
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-                fixedLabelAsPlaceholder
-                mask={paymentInputMasks.card.expirationDate}
-              />
-            )}
-          />
-        </>
+            </S.Column>
+          </S.ContainerInputs>
+        </S.ContainerForm>
       )}
 
       {selectedType === "pix" && (
-        <>
-          {/* ...inputs do pix */}
-
+        <S.ContainerInfo>
           <PaymentInfoNote>
             O QR Code será gerado automaticamente após a finalização da compra.
           </PaymentInfoNote>
-        </>
+        </S.ContainerInfo>
       )}
 
       {selectedType === "ticket" && (
-        <>
-          {/* ...inputs do boleto */}
-
+        <S.ContainerInfo>
           <PaymentInfoNote>
             O boleto com código de barras e linha digitável será disponibilizado
             após a finalização da compra.
           </PaymentInfoNote>
-        </>
+        </S.ContainerInfo>
       )}
 
-      <CustomButton
-        label="Voltar"
-        variant="text"
-        color="var(--failed-1)"
-        onClick={handleBack}
-        sxStyle={{
-          width: "345px",
-          marginTop: "40px",
-          borderColor: "var(--failed-1)",
-        }}
-      />
+      <S.FooterButtons>
+        <CustomButton
+          label="Voltar"
+          variant="text"
+          color="var(--failed-1)"
+          onClick={handleBack}
+          sxStyle={{
+            borderColor: "var(--failed-1)",
+          }}
+        />
 
-      <CustomButton
-        label="Próximo"
-        variant="contained"
-        color="var(--color-white)"
-        type="submit"
-        sxStyle={{ width: "345px", marginTop: "40px" }}
-      />
+        <CustomButton
+          label="Continuar"
+          variant="contained"
+          color="var(--color-white)"
+          type="submit"
+        />
+      </S.FooterButtons>
     </S.Form>
   );
 };
