@@ -53,7 +53,11 @@ const CompletedPage: React.FC = () => {
             <CustomButton
               onClick={() => authenticateAndRedirect("/transactions")}
               label="Ir para Gestão"
-              variant="stylized"
+              variant="outlined"
+              color="var(--color-profile-2)"
+              sxStyle={{
+                width: isMobile ? "200px" : "250px",
+              }}
             />
           </S.Row>
         </S.Column>

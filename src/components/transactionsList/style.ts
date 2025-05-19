@@ -24,6 +24,10 @@ export const Row = styled.div`
   align-items: end;
   justify-content: center;
   width: 100%;
+
+  @media (min-width: 1024px) {
+    position: relative;
+  }
 `;
 
 export const RowInputSearch = styled.div`
@@ -53,7 +57,7 @@ export const Title = styled.h2`
   font-family: var(--lexend);
   font-weight: var(--font-weight-300);
   font-size: var(--font-size-28);
-  color: var(--grey-2);
+  color: var(--color-profile-2);
   margin: auto 0;
 
   @media (min-width: 768px) {
@@ -62,6 +66,10 @@ export const Title = styled.h2`
   }
   @media (min-width: 1024px) {
     font-size: var(--font-size-36);
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding-top: 6px;
   }
 `;
 

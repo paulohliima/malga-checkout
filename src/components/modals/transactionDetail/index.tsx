@@ -155,19 +155,21 @@ const TabClientAndPayment = ({ customer, payment }: ITabClient) => {
     <S.ContainerTab>
       <S.SectionTitle>Resumo do Cliente</S.SectionTitle>
 
-      <S.InfoGroup>
-        <S.Label>Nome do Cliente:</S.Label>
-        <S.Value>
-          {firstName} {lastName}
-        </S.Value>
-      </S.InfoGroup>
+      <S.Row>
+        <S.InfoGroup>
+          <S.Label>Nome do Cliente:</S.Label>
+          <S.Value>
+            {firstName} {lastName}
+          </S.Value>
+        </S.InfoGroup>
 
-      <S.InfoGroup>
-        <S.Label>Documento:</S.Label>
-        <S.Value>
-          {document.type.toUpperCase()} - {document.number}
-        </S.Value>
-      </S.InfoGroup>
+        <S.InfoGroup>
+          <S.Label>Documento:</S.Label>
+          <S.Value>
+            {document.type.toUpperCase()} - {document.number}
+          </S.Value>
+        </S.InfoGroup>
+      </S.Row>
 
       <S.Divider />
 

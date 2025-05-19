@@ -85,7 +85,7 @@ const CustomButton: React.FC<IButtonProps> = ({
               variant === "text"
                 ? "none"
                 : variant === "outlined"
-                ? "1px solid var(--color-profile-3)"
+                ? "1px solid var(--color-profile-2)"
                 : "none",
             transition: "0.2s ease-in",
             borderRadius: variant === "text" ? "none" : "7px",
