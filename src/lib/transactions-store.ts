@@ -18,7 +18,10 @@ export const transactions: ITransactionResponse[] = [
         neighborhood: "Centro",
       },
     },
-    items: [{ name: "Produto 1", quantity: 2, amount: 5000 }],
+    items: [
+      { name: "Notebook", quantity: 2, amount: 8000 },
+      { name: "Mouse", quantity: 3, amount: 300 },
+    ],
     paymentMethod: {
       type: "card",
       card: {
@@ -47,7 +50,11 @@ export const transactions: ITransactionResponse[] = [
         neighborhood: "Bela Vista",
       },
     },
-    items: [{ name: "Curso Online", quantity: 1, amount: 7500 }],
+    items: [
+      { name: "Curso Online", quantity: 1, amount: 7500 },
+      { name: "Curso Online 2", quantity: 1, amount: 5000 },
+      { name: "Curso Online 3", quantity: 1, amount: 6500 },
+    ],
     paymentMethod: {
       type: "pix",
       pix: {
@@ -76,7 +83,7 @@ export const transactions: ITransactionResponse[] = [
     },
     items: [
       { name: "Notebook", quantity: 1, amount: 12000 },
-      { name: "Mouse", quantity: 1, amount: 3000 },
+      { name: "Mouse", quantity: 1, amount: 300 },
     ],
     paymentMethod: {
       type: "ticket",
@@ -107,7 +114,7 @@ export const transactions: ITransactionResponse[] = [
     },
     items: [
       { name: "Notebook", quantity: 1, amount: 12000 },
-      { name: "Mouse", quantity: 1, amount: 3000 },
+      { name: "Mouse", quantity: 1, amount: 300 },
     ],
     paymentMethod: {
       type: "ticket",
@@ -138,7 +145,7 @@ export const transactions: ITransactionResponse[] = [
     },
     items: [
       { name: "Notebook", quantity: 1, amount: 12000 },
-      { name: "Mouse", quantity: 1, amount: 3000 },
+      { name: "Mouse", quantity: 1, amount: 300 },
     ],
     paymentMethod: {
       type: "card",
@@ -170,7 +177,7 @@ export const transactions: ITransactionResponse[] = [
     },
     items: [
       { name: "Notebook", quantity: 1, amount: 12000 },
-      { name: "Mouse", quantity: 1, amount: 3000 },
+      { name: "Mouse", quantity: 1, amount: 300 },
     ],
     paymentMethod: {
       type: "card",

@@ -1,78 +1,45 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const ContainerTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding-bottom: 10px;
-`;
-
-export const Title = styled.h2`
-  width: max-content;
-  font-family: var(--inter);
-  font-size: var(--font-size-20);
-  color: var(--grey-1);
-`;
-
 export const ContainerTab = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 10px;
-  color: var(--grey-1);
-  max-height: calc(100vh - 150px); // Ajuste conforme necessário
-  overflow-y: auto;
-  scroll-behavior: smooth;
-
-  /* Scrollbar estilizada (opcional) */
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-profile-2);
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
+  font-family: var(--lexend);
+  width: 100%;
+  border-radius: 12px;
+  overflow-y: scroll;
 `;
 
 export const SectionTitle = styled.h3`
-  font-size: 1.1rem;
-  color: var(--color-profile-3);
+  font-size: var(--font-size-20);
+  font-weight: var(--font-weight-300);
   text-align: center;
+  margin-bottom: 20px;
+  color: var(--color-profile-3);
 `;
 
 export const InfoGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  margin-bottom: 1rem;
 `;
 
 export const Label = styled.span`
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: var(--grey-3);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-600);
+  color: var(--grey-2);
 `;
 
 export const Value = styled.span`
-  font-weight: 400;
-  font-size: 1rem;
-  color: var(--grey-1);
+  font-size: var(--font-size-14);
+  color: var(--grey-2);
+`;
 
-  a {
-    color: var(--color-profile-3);
-    text-decoration: underline;
-  }
+export const TotalValue = styled.span`
+  font-size: var(--font-size-24);
+  color: var(--color-profile-3);
+`;
+
+export const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Divider = styled.div`
@@ -83,8 +50,16 @@ export const Divider = styled.div`
   margin-bottom: 20px;
 `;
 
-export const Row = styled.div`
+export const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const ContainerTitle = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
   width: 100%;
+  padding-bottom: 10px;
 `;

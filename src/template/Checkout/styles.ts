@@ -6,12 +6,13 @@ export const Container = styled.div`
   padding-top: 80px;
   background-color: var(--color-brand-5);
   min-height: 100vh;
-
-  @media (min-width: 768px) {
-  }
 `;
 
 export const ContainerCheckout = styled.div`
   display: flex;
-  padding-bottom: 40px;
+  padding: 20px 0;
+
+  @media (min-width: 768px) {
+    padding: 40px 0;
+  }
 `;

@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useForm, Controller, Resolver } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FilterFormData, filterSchema } from "@/schemas/filterSchema";
 import CustomSelect from "../../select";
 import * as S from "./style";
 import CustomButton from "../../button";
@@ -20,12 +21,17 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
   const { allTransactions, setTransactionsValues, setPageValues } =
     useTransactions();
 
-  const [filters, setFilters] = useState({
-    typeFilter: "id",
-    inputValue: "",
-    status: "",
-    method: "",
+  const { handleSubmit, control, watch, reset } = useForm<FilterFormData>({
+    resolver: yupResolver(filterSchema) as Resolver<FilterFormData>,
+    defaultValues: {
+      typeFilter: "id",
+      inputValue: "",
+      status: "",
+      method: "",
+    },
   });
+
+  const typeFilter = watch("typeFilter");
 
   const optionsType = [
     { value: "id", label: "ID" },
@@ -57,20 +63,12 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
         setLoading(false);
       }, 400);
     } catch (e: unknown) {
-      if (e instanceof Error) {
-        toast.error(e.message);
-      } else {
-        toast.error("Erro desconhecido");
-      }
+      toast.error(e instanceof Error ? e.message : "Erro desconhecido");
     }
   };
 
-  const handleClearValuesFilter = () => {
-    handleClearFilter();
-  };
-
-  const handleSearchFilter = () => {
-    const { typeFilter, inputValue, status, method } = filters;
+  const onSubmit = (data: FilterFormData) => {
+    const { typeFilter, inputValue, status, method } = data;
     let filtered = [];
 
     switch (typeFilter) {
@@ -96,75 +94,122 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
     }, 300);
   };
 
+  const handleClearValuesFilter = () => {
+    reset();
+    handleClearFilter();
+  };
+
   return (
     <S.Container>
-      <S.InputsContainer>
-        <CustomSelect
-          label="Tipo"
-          value={filters.typeFilter}
-          onChange={(e) => setFilters((prev) => ({ ...prev, typeFilter: e }))}
-          options={optionsType}
-        />
-
-        {filters.typeFilter === "id" && (
-          <CustomInput
-            label="Digite o Id"
-            value={filters.inputValue}
-            onChange={(e: any) =>
-              setFilters((prev) => ({ ...prev, inputValue: e }))
-            }
-          />
-        )}
-
-        {filters.typeFilter === "status" && (
-          <CustomSelect
-            label="Status"
-            value={filters.status}
-            onChange={(e) => setFilters((prev) => ({ ...prev, status: e }))}
-            options={optionsStatus}
-          />
-        )}
-
-        {filters.typeFilter === "method" && (
-          <CustomSelect
-            label="Método de Pagamento"
-            value={filters.method}
-            onChange={(e) => setFilters((prev) => ({ ...prev, method: e }))}
-            options={optionsMethod}
-          />
-        )}
-      </S.InputsContainer>
-
-      <S.Row>
-        <S.ButtonsContainer>
-          <CustomButton
-            variant="contained"
-            label="Buscar"
-            onClick={handleSearchFilter}
-            sxStyle={{ width: "100px" }}
-          />
-          <CustomButton
-            variant="text"
-            label="Limpar Filtros"
-            color="var(--color-profile-2)"
-            onClick={handleClearValuesFilter}
-          />
-        </S.ButtonsContainer>
-        {!isMobile && (
-          <S.RefreshContainer onClick={handleRefreshList}>
-            <S.RefreshIcon
-              $loading={loading}
-              style={{
-                width: "30px",
-                height: "30px",
-                color: "var(--color-profile-2)",
-                alignSelf: "end",
-              }}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <S.FiltersWrapper>
+          <S.InputsContainer>
+            <Controller
+              name="typeFilter"
+              control={control}
+              render={({ field, fieldState }) => (
+                <CustomSelect
+                  label="Tipo"
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={optionsType}
+                  fullWidth
+                  fixedLabelAsPlaceholder
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                />
+              )}
             />
-            <S.RefreshLabel>Atualizar</S.RefreshLabel>
-          </S.RefreshContainer>
-        )}
-      </S.Row>
+
+            {typeFilter === "id" && (
+              <Controller
+                name="inputValue"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <CustomInput
+                    label="Digite o ID"
+                    value={field.value ?? ""}
+                    onChange={(val: string) => field.onChange(val)}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    fixedLabelAsPlaceholder
+                  />
+                )}
+              />
+            )}
+
+            {typeFilter === "status" && (
+              <Controller
+                name="status"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <CustomSelect
+                    label="Status"
+                    value={field.value ?? ""}
+                    onChange={(val: string) => field.onChange(val)}
+                    options={optionsStatus}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    fullWidth
+                    fixedLabelAsPlaceholder
+                  />
+                )}
+              />
+            )}
+
+            {typeFilter === "method" && (
+              <Controller
+                name="method"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <CustomSelect
+                    label="Método de Pagamento"
+                    value={field.value ?? ""}
+                    onChange={(val: string) => field.onChange(val)}
+                    options={optionsMethod}
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    fullWidth
+                    fixedLabelAsPlaceholder
+                  />
+                )}
+              />
+            )}
+          </S.InputsContainer>
+
+          <S.Row>
+            <S.ButtonsContainer>
+              <CustomButton
+                variant="contained"
+                label="Buscar"
+                type="submit"
+                sxStyle={{ width: "100px" }}
+              />
+              <CustomButton
+                variant="text"
+                label="Limpar Filtros"
+                color="var(--color-profile-2)"
+                onClick={handleClearValuesFilter}
+              />
+            </S.ButtonsContainer>
+
+            {!isMobile && (
+              <S.RefreshContainer onClick={handleRefreshList}>
+                <S.RefreshIcon
+                  $loading={loading}
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    color: "var(--color-profile-2)",
+                    alignSelf: "end",
+                  }}
+                />
+                <S.RefreshLabel>Atualizar</S.RefreshLabel>
+              </S.RefreshContainer>
+            )}
+          </S.Row>
+        </S.FiltersWrapper>
+      </form>
     </S.Container>
   );
 };

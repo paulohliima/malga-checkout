@@ -67,177 +67,209 @@ const ClientForm = ({ handleNext }: ICheckoutForm) => {
 
   return (
     <S.Form onSubmit={handleSubmit(handleSubmitForm)}>
-      <S.Label>Nome</S.Label>
-      <Controller
-        name="firstName"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: João"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
+      <S.ContainerInputs>
+        <S.Column>
+          <S.Label>Nome</S.Label>
+          <Controller
+            name="firstName"
+            control={control}
+            render={({ field, fieldState }) => (
+              <CustomInput
+                label="Primeiro Nome"
+                value={field.value}
+                onChange={(val: string) => field.onChange(val)}
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                fixedLabelAsPlaceholder
+                noNumbers
+                noSpaces
+              />
+            )}
           />
-        )}
-      />
-
-      <S.Label>Sobrenome</S.Label>
-      <Controller
-        name="lastName"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: Alfredo"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
+        </S.Column>
+        <S.Column>
+          <S.Label>Sobrenome</S.Label>
+          <Controller
+            name="lastName"
+            control={control}
+            render={({ field, fieldState }) => (
+              <CustomInput
+                label="Último Nome"
+                value={field.value}
+                onChange={(val: string) => field.onChange(val)}
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                fixedLabelAsPlaceholder
+                noNumbers
+                noSpaces
+              />
+            )}
           />
-        )}
-      />
+        </S.Column>
+      </S.ContainerInputs>
 
-      <S.Label>Tipo de Documento</S.Label>
-      <Controller
-        name="documentType"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomSelect
-            label="CPF/CNPJ"
-            value={(field.value as string | number) ?? ""}
-            onChange={(val: string) => field.onChange(val)}
-            options={optionsType}
-            fullWidth
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
+      <S.ContainerInputs>
+        <S.Column>
+          <S.Label>Tipo de Documento</S.Label>
+          <Controller
+            name="documentType"
+            control={control}
+            render={({ field, fieldState }) => (
+              <CustomSelect
+                label="CPF/CNPJ"
+                value={(field.value as string | number) ?? ""}
+                onChange={(val: string) => field.onChange(val)}
+                options={optionsType}
+                fullWidth
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                fixedLabelAsPlaceholder
+              />
+            )}
           />
-        )}
-      />
+        </S.Column>
 
-      <S.Label>Nº do Documento</S.Label>
-      <Controller
-        name="documentNumber"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: 123.456.789-12"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            mask={mask}
-            fixedLabelAsPlaceholder
-            disabled={documentType === undefined}
+        <S.Column>
+          <S.Label>Nº do Documento</S.Label>
+          <Controller
+            name="documentNumber"
+            control={control}
+            render={({ field, fieldState }) => (
+              <CustomInput
+                label="Ex: 123.456.789-12"
+                value={field.value}
+                onChange={(val: string) => field.onChange(val)}
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                mask={mask}
+                fixedLabelAsPlaceholder
+                disabled={documentType === undefined}
+              />
+            )}
           />
-        )}
-      />
+        </S.Column>
+      </S.ContainerInputs>
 
-      <S.Label>País</S.Label>
-      <Controller
-        name="country"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: Brasil"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
+      <S.ContainerInputs>
+        <S.Column>
+          <S.Label>País</S.Label>
+          <Controller
+            name="country"
+            control={control}
+            render={({ field, fieldState }) => (
+              <CustomInput
+                label="Ex: Brasil"
+                value={field.value}
+                onChange={(val: string) => field.onChange(val)}
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                fixedLabelAsPlaceholder
+                noNumbers
+              />
+            )}
           />
-        )}
-      />
-
-      <S.Label>Estado</S.Label>
-      <Controller
-        name="state"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: Pará"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
+        </S.Column>
+        <S.Column>
+          <S.Label>Estado</S.Label>
+          <Controller
+            name="state"
+            control={control}
+            render={({ field, fieldState }) => (
+              <CustomInput
+                label="Ex: Pará"
+                value={field.value}
+                onChange={(val: string) => field.onChange(val)}
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                fixedLabelAsPlaceholder
+                noNumbers
+              />
+            )}
           />
-        )}
-      />
+        </S.Column>
+      </S.ContainerInputs>
 
-      <S.Label>Cidade</S.Label>
-      <Controller
-        name="city"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: Belém"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
+      <S.ContainerInputs>
+        <S.Column>
+          <S.Label>Cidade</S.Label>
+          <Controller
+            name="city"
+            control={control}
+            render={({ field, fieldState }) => (
+              <CustomInput
+                label="Ex: Belém"
+                value={field.value}
+                onChange={(val: string) => field.onChange(val)}
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                fixedLabelAsPlaceholder
+                noNumbers
+              />
+            )}
           />
-        )}
-      />
-
-      <S.Label>Bairro</S.Label>
-      <Controller
-        name="neighborhood"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: Bairro X"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
+        </S.Column>
+        <S.Column>
+          <S.Label>Bairro</S.Label>
+          <Controller
+            name="neighborhood"
+            control={control}
+            render={({ field, fieldState }) => (
+              <CustomInput
+                label="Ex: Bairro X"
+                value={field.value}
+                onChange={(val: string) => field.onChange(val)}
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                fixedLabelAsPlaceholder
+              />
+            )}
           />
-        )}
-      />
+        </S.Column>
+      </S.ContainerInputs>
 
-      <S.Label>Rua</S.Label>
-      <Controller
-        name="street"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: Rua 1"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
-          />
-        )}
-      />
-
-      <S.Label>Número</S.Label>
-      <Controller
-        name="number"
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            label="Ex: 123"
-            value={field.value}
-            onChange={(val: string) => field.onChange(val)}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            fixedLabelAsPlaceholder
-          />
-        )}
-      />
-
-      <CustomButton
-        label={"Próximo"}
-        variant="contained"
-        color="var(--color-white)"
-        type="submit"
-        sxStyle={{ width: "345px", marginTop: "40px" }}
-      />
+      <S.Column>
+        <S.Label>Rua</S.Label>
+        <Controller
+          name="street"
+          control={control}
+          render={({ field, fieldState }) => (
+            <CustomInput
+              label="Ex: Rua 1"
+              value={field.value}
+              onChange={(val: string) => field.onChange(val)}
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+              fixedLabelAsPlaceholder
+            />
+          )}
+        />
+      </S.Column>
+      <S.Column>
+        <S.Label>Número</S.Label>
+        <Controller
+          name="number"
+          control={control}
+          render={({ field, fieldState }) => (
+            <CustomInput
+              label="Ex: 123"
+              value={field.value}
+              onChange={(val: string) => field.onChange(val)}
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+              fixedLabelAsPlaceholder
+              mask={"000000000"}
+            />
+          )}
+        />
+      </S.Column>
+      <S.FooterButtons>
+        <CustomButton
+          label={"Continuar"}
+          variant="contained"
+          color="var(--color-white)"
+          type="submit"
+        />
+      </S.FooterButtons>
     </S.Form>
   );
 };

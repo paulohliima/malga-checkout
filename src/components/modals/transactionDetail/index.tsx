@@ -19,7 +19,7 @@ import {
   IPaymentMethod,
   ITransactionResponse,
 } from "@/interfaces/transactions";
-import ProductCard from "@/components/cards/productCard";
+
 import ProductsList from "@/components/productsList";
 
 interface ITransactionDetailModal {
@@ -38,8 +38,6 @@ interface ITabClient {
 }
 
 const TabProducts = ({ items }: ITabProducts) => {
-  const isMobile = useMediaQuery(500);
-
   const totalValue = items.reduce((sum, item) => {
     return sum + item.amount * item.quantity;
   }, 0);
@@ -53,15 +51,9 @@ const TabProducts = ({ items }: ITabProducts) => {
 
   return (
     <S.Container>
-      {isMobile ? (
-        items.map((product, index) => {
-          return <ProductCard item={product} key={index} />;
-        })
-      ) : (
-        <ProductsList products={items} />
-      )}
-      {isMobile && <S.Divider />}
-      <S.Value>Total: R$ {formatCurrency(totalValue)}</S.Value>
+      <ProductsList products={items} />
+      <S.Divider />
+      <S.TotalValue>Total: {formatCurrency(totalValue)}</S.TotalValue>
     </S.Container>
   );
 };
@@ -75,22 +67,26 @@ const TabClientAndPayment = ({ customer, payment }: ITabClient) => {
         return (
           <>
             <S.SectionTitle>Pagamento com Cartão</S.SectionTitle>
+
             <S.InfoGroup>
               <S.Label>Nome no Cartão:</S.Label>
               <S.Value>{payment.card?.holderName}</S.Value>
             </S.InfoGroup>
-            <S.InfoGroup>
-              <S.Label>Parcelas:</S.Label>
-              <S.Value>{payment.card?.installments}x</S.Value>
-            </S.InfoGroup>
-            {(payment.card?.firstDigits || payment.card?.lastDigits) && (
+            <S.Row>
               <S.InfoGroup>
-                <S.Label>Cartão:</S.Label>
-                <S.Value>
-                  {payment.card?.firstDigits}••••••••{payment.card?.lastDigits}
-                </S.Value>
+                <S.Label>Parcelas:</S.Label>
+                <S.Value>{payment.card?.installments}x</S.Value>
               </S.InfoGroup>
-            )}
+              {(payment.card?.firstDigits || payment.card?.lastDigits) && (
+                <S.InfoGroup>
+                  <S.Label>Cartão:</S.Label>
+                  <S.Value>
+                    {payment.card?.firstDigits}••••••••
+                    {payment.card?.lastDigits}
+                  </S.Value>
+                </S.InfoGroup>
+              )}
+            </S.Row>
           </>
         );
 
@@ -173,19 +169,9 @@ const TabClientAndPayment = ({ customer, payment }: ITabClient) => {
         </S.Value>
       </S.InfoGroup>
 
+      <S.Divider />
+
       <S.SectionTitle>Endereço</S.SectionTitle>
-
-      <S.InfoGroup>
-        <S.Label>Rua:</S.Label>
-        <S.Value>
-          {address.street}, {address.number}
-        </S.Value>
-      </S.InfoGroup>
-
-      <S.InfoGroup>
-        <S.Label>Bairro:</S.Label>
-        <S.Value>{address.neighborhood}</S.Value>
-      </S.InfoGroup>
 
       <S.Row>
         <S.InfoGroup>
@@ -198,12 +184,25 @@ const TabClientAndPayment = ({ customer, payment }: ITabClient) => {
           <S.Value>{address.state}</S.Value>
         </S.InfoGroup>
       </S.Row>
+      <S.Row>
+        <S.InfoGroup>
+          <S.Label>Cidade:</S.Label>
+          <S.Value>{address.city}</S.Value>
+        </S.InfoGroup>
 
+        <S.InfoGroup>
+          <S.Label>Bairro:</S.Label>
+          <S.Value>{address.neighborhood}</S.Value>
+        </S.InfoGroup>
+      </S.Row>
       <S.InfoGroup>
-        <S.Label>Cidade:</S.Label>
-        <S.Value>{address.city}</S.Value>
+        <S.Label>Rua:</S.Label>
+        <S.Value>
+          {address.street}, {address.number}
+        </S.Value>
       </S.InfoGroup>
 
+      <S.Divider />
       {renderPaymentInfo()}
     </S.ContainerTab>
   );
@@ -215,6 +214,7 @@ const TransactionDetailModal = ({
   transaction,
 }: ITransactionDetailModal) => {
   const isMobile = useMediaQuery();
+  const isLaptop = useMediaQuery(1024);
   const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -224,14 +224,18 @@ const TransactionDetailModal = ({
   const modalBoxStyle = {
     display: "flex",
     flexDirection: "column",
-    alignItens: "center",
-    minWidth: isMobile ? "100vw" : "600px",
-    minHeight: isMobile ? "100vh" : "60vh",
+    alignItems: "center", // <-- corrigido aqui
+    width: !isLaptop ? "800px" : "100vw",
+    height: !isLaptop ? "700px" : "100vh",
+    maxHeight: "100vh",
     bgcolor: "var(--color-brand-5)",
     p: 3,
     mx: "auto",
     overflowY: "auto",
     color: "#000",
+    boxShadow: "var(--box-shadow-1)",
+    borderRadius: !isLaptop ? "8px" : "0",
+    zIndex: 1400,
   };
 
   return (
@@ -240,7 +244,9 @@ const TransactionDetailModal = ({
       onClose={onClose}
       closeAfterTransition
       BackdropProps={{
-        style: { backgroundColor: "transparent", display: "none" },
+        style: {
+          display: !isLaptop ? "block" : "none",
+        },
       }}
       slots={{ backdrop: Backdrop }}
       slotProps={{
@@ -249,80 +255,120 @@ const TransactionDetailModal = ({
         },
       }}
     >
-      <Fade in={open}>
-        <Box sx={modalBoxStyle}>
-          <S.Container>
-            <S.ContainerTitle>
-              <S.Title>DETALHES DA TRANSAÇÃO</S.Title>
-              <MdOutlineClose
-                onClick={onClose}
-                style={{
-                  width: "26px",
-                  height: "26px",
-                  color: "var(--grey-1)",
-                }}
-              />
-            </S.ContainerTitle>
-
-            <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <TabList
-                  onChange={handleChange}
-                  aria-label="lab API tabs example"
-                  sx={{
-                    "& .MuiTabs-indicator": {
-                      backgroundColor: "var(--color-profile-3)", // cor da linha ativa
-                    },
+      <Box
+        sx={{
+          display: !isLaptop ? "flex" : "block",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Fade in={open}>
+          <Box sx={modalBoxStyle}>
+            <S.Container>
+              <S.ContainerTitle>
+                <MdOutlineClose
+                  onClick={onClose}
+                  style={{
+                    width: "26px",
+                    height: "26px",
+                    color: "var(--grey-1)",
+                    cursor: "pointer",
                   }}
-                >
-                  <Tab
-                    label="Produtos"
-                    value="1"
-                    sx={{
-                      color: "var(--color-profile-1)",
-                      "&.Mui-selected": {
-                        color: "var(--color-profile-3)",
-                      },
-                    }}
-                  />
-                  <Tab
-                    label="Resumo do Comprador"
-                    value="2"
-                    sx={{
-                      color: "var(--color-profile-1)",
-                      "&.Mui-selected": {
-                        color: "var(--color-profile-3)",
-                      },
-                    }}
-                  />
-                </TabList>
-              </Box>
-
-              <TabPanel
-                value="1"
-                style={{
-                  width: "100%",
-                  maxWidth: isMobile ? "400px" : "800px",
-                }}
-              >
-                <TabProducts items={transaction.items} />
-              </TabPanel>
-              <TabPanel
-                value="2"
-                style={{
-                  width: "100%",
-                  maxWidth: isMobile ? "400px" : "800px",
-                }}
-              >
-                <TabClientAndPayment
-                  customer={transaction.customer}
-                  payment={transaction.paymentMethod}
                 />
-              </TabPanel>
-            </TabContext>
-          </S.Container>
-        </Box>
-      </Fade>
+              </S.ContainerTitle>
+
+              <TabContext value={value}>
+                {isMobile ? (
+                  <>
+                    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                      <TabList
+                        onChange={handleChange}
+                        aria-label="lab API tabs example"
+                        sx={{
+                          "& .MuiTabs-indicator": {
+                            backgroundColor: "var(--color-profile-3)",
+                          },
+                        }}
+                      >
+                        <Tab
+                          label="Produtos"
+                          value="1"
+                          sx={{
+                            color: "var(--color-profile-1)",
+                            "&.Mui-selected": {
+                              color: "var(--color-profile-3)",
+                            },
+                          }}
+                        />
+                        <Tab
+                          label="Resumo do Comprador"
+                          value="2"
+                          sx={{
+                            color: "var(--color-profile-1)",
+                            "&.Mui-selected": {
+                              color: "var(--color-profile-3)",
+                            },
+                          }}
+                        />
+                      </TabList>
+                    </Box>
+
+                    <TabPanel
+                      value="1"
+                      style={{
+                        width: "100%",
+                        maxWidth: "450px",
+                      }}
+                    >
+                      <TabProducts items={transaction.items} />
+                    </TabPanel>
+                    <TabPanel
+                      value="2"
+                      style={{
+                        width: "100%",
+                        maxWidth: "450px",
+                      }}
+                    >
+                      <TabClientAndPayment
+                        customer={transaction.customer}
+                        payment={transaction.paymentMethod}
+                      />
+                    </TabPanel>
+                  </>
+                ) : (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "32px",
+                      maxWidth: "100%",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Box sx={{ width: "300px" }}>
+                      <TabProducts items={transaction.items} />
+                    </Box>
+                    <Box
+                      sx={{
+                        width: "1px",
+                        backgroundColor: "var(--grey-2)",
+                        height: "100%",
+                      }}
+                    />
+                    <Box sx={{ width: "300px" }}>
+                      <TabClientAndPayment
+                        customer={transaction.customer}
+                        payment={transaction.paymentMethod}
+                      />
+                    </Box>
+                  </Box>
+                )}
+              </TabContext>
+            </S.Container>
+          </Box>
+        </Fade>
+      </Box>
     </Modal>
   );
 };

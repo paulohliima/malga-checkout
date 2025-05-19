@@ -64,7 +64,7 @@ export const Row = styled.div`
 
 export const ImageLanding = styled.img`
   width: 100%;
-  min-width: 390px;
+  min-width: 350px;
   max-width: 400px;
   padding-top: 20px;
 
@@ -102,6 +102,21 @@ export const Text = styled.p`
 export const TypeWritter = styled.div`
   display: flex;
   gap: 2px;
+  justify-content: space-between;
+
+  .Typewriter {
+    width: 130px;
+
+    @media (min-width: 500px) {
+      width: 200px;
+    }
+    @media (min-width: 768px) {
+      width: 150px;
+    }
+    @media (min-width: 1300px) {
+      width: 200px;
+    }
+  }
 
   .Typewriter__wrapper {
     font-weight: bold;
@@ -113,6 +128,7 @@ export const TypeWritter = styled.div`
     line-height: 1.6;
     margin: 0;
     text-align: center;
+
     @media (min-width: 500px) {
       font-size: var(--font-size-28);
     }

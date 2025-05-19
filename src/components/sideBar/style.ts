@@ -12,7 +12,7 @@ export const MobileHeader = styled.div`
   position: absolute;
   top: 25px;
   right: 25px;
-  z-index: 1100;
+  z-index: 1202;
 `;
 
 export const MenuButton = styled.button<MenuButtonProps>`
@@ -87,7 +87,7 @@ export const Container = styled.aside<ContainerProps>`
   padding: 60px 20px 20px;
   box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
   transition: right 0.3s ease;
-  z-index: 1050;
+  z-index: 1201;
 `;
 
 export const Menu = styled.ul`

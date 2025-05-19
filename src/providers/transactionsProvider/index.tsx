@@ -38,7 +38,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   >([]);
   const [pageValues, setPageValues] = useState({
     currentPage: 1,
-    totalPages: Math.ceil(allTransactions.length / 5),
+    totalPages: Math.ceil(allTransactions.length / 10),
   });
 
   useEffect(() => {

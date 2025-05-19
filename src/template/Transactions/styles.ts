@@ -9,6 +9,5 @@ export const Container = styled.div`
 
   @media (min-width: 768px) {
     align-items: center;
-    padding: 150px 20px;
   }
 `;
