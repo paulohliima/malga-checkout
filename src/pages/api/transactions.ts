@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { v4 as uuidv4 } from "uuid";
 
 import {
   ITransactionRequest,
@@ -34,8 +33,10 @@ export default function handler(
   if (req.method === "POST") {
     const newTransaction = req.body as ITransactionRequest;
 
+    const lastId = Number(transactions[transactions.length - 1].id) + 1;
+
     const transaction = {
-      id: uuidv4(),
+      id: lastId.toString(),
       status: TransactionStatus.AUTHORIZED,
       ...newTransaction,
     };

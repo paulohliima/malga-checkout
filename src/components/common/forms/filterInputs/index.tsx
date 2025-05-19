@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import CustomSelect from "../../select";
 import * as S from "./style";
@@ -109,7 +110,9 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
           <CustomInput
             label="Digite o Id"
             value={filters.inputValue}
-            onChange={(e) => setFilters((prev) => ({ ...prev, inputValue: e }))}
+            onChange={(e: any) =>
+              setFilters((prev) => ({ ...prev, inputValue: e }))
+            }
           />
         )}
 
@@ -135,15 +138,15 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
       <S.Row>
         <S.ButtonsContainer>
           <CustomButton
-            variant="outlined"
+            variant="contained"
             label="Buscar"
-            color="#006f7d"
             onClick={handleSearchFilter}
+            sxStyle={{ width: "100px" }}
           />
           <CustomButton
             variant="text"
             label="Limpar Filtros"
-            color="#006f7d"
+            color="var(--color-profile-2)"
             onClick={handleClearValuesFilter}
           />
         </S.ButtonsContainer>

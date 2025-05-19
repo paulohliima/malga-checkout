@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 export const Container = styled.div<{ $isLogged: boolean; $isMobile: boolean }>`
   display: ${(props) =>
-    (props.$isLogged && !props.$isMobile) || !props.$isMobile
+    (props.$isLogged && !props.$isMobile) ||
+    !props.$isMobile ||
+    (props.$isLogged && props.$isMobile)
       ? "flex"
       : "none"};
   align-items: center;
@@ -11,7 +13,10 @@ export const Container = styled.div<{ $isLogged: boolean; $isMobile: boolean }>`
   position: absolute;
   top: 0;
   width: 100%;
-  box-shadow: var(--box-shadow-2);
+  box-shadow: ${(props) =>
+    (props.$isLogged && !props.$isMobile) || !props.$isMobile
+      ? "var(--box-shadow-2)"
+      : "none"};
 
   @media (min-width: 768px) {
     justify-content: space-between;

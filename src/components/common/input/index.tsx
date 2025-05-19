@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TextField } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import * as S from "./style";
 import { RiSearch2Line } from "react-icons/ri";
+import MaskedInput from "../maskedInput";
 
 interface ICustomInput {
   label: string;
@@ -10,11 +13,13 @@ interface ICustomInput {
   onChange: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
-  error?: boolean;
   helperText?: string;
   fullWidth?: boolean;
   searchIcon?: boolean;
   onClickSearchIcon?: () => void;
+  mask?: string;
+  error?: boolean;
+  fixedLabelAsPlaceholder?: boolean;
 }
 
 const CustomInput = ({
@@ -24,16 +29,18 @@ const CustomInput = ({
   onChange,
   placeholder,
   disabled = false,
-  error = false,
   helperText,
   fullWidth = true,
-  searchIcon = false,
+  searchIcon,
+  mask = undefined,
+  error,
+  fixedLabelAsPlaceholder = false,
   onClickSearchIcon,
 }: ICustomInput) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <S.Container $active={isFocused}>
+    <S.Container $active={isFocused} $searchIcon={searchIcon}>
       {searchIcon && (
         <S.SearchIconBox $active={isFocused}>
           <RiSearch2Line
@@ -44,24 +51,40 @@ const CustomInput = ({
         </S.SearchIconBox>
       )}
       <TextField
-        label={label}
+        label={fixedLabelAsPlaceholder ? undefined : label}
+        placeholder={fixedLabelAsPlaceholder ? label : placeholder}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         type={type}
         value={value}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          onChange(e.target.value)
-        }
-        placeholder={placeholder}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          if (!mask) onChange(e.target.value);
+        }}
         disabled={disabled}
-        error={error}
-        helperText={helperText}
         fullWidth={fullWidth}
         variant="outlined"
         size="small"
         color="success"
-        sx={
-          searchIcon
+        error={error}
+        inputProps={{ maxLength: 22 }}
+        //@ts-ignore
+        InputProps={
+          mask
+            ? {
+                inputComponent: MaskedInput as any,
+                inputProps: {
+                  mask,
+                  name: label,
+                  value,
+                  onChange: (event: {
+                    target: { name: string; value: string };
+                  }) => onChange(event.target.value),
+                },
+              }
+            : undefined
+        }
+        sx={{
+          ...(searchIcon
             ? {
                 "& .MuiOutlinedInput-root": {
                   "&:hover fieldset": {
@@ -76,14 +99,14 @@ const CustomInput = ({
                 },
                 "& fieldset": {
                   borderLeft: "none",
-                  borderRadius: "0 16px 16px 0",
+                  borderRadius: "0 4px 4px 0",
                   borderColor: "var(--color-profile-2)",
                 },
               }
             : {
                 "& .MuiOutlinedInput-root": {
                   "&:hover fieldset": {
-                    borderColor: "var(--color-profile-2)",
+                    borderColor: disabled ? "none" : "var(--color-profile-2)",
                   },
                   "& input": {
                     color: "var(--grey-2)",
@@ -93,12 +116,13 @@ const CustomInput = ({
                   color: "var(--grey-2)",
                 },
                 "& fieldset": {
-                  borderRadius: "16px", // ⬅️ borda completa
+                  borderRadius: "4px",
                   borderColor: "var(--color-profile-2)",
                 },
-              }
-        }
+              }),
+        }}
       />
+      <S.ErrorLabel>{error ? helperText : "\u00A0"}</S.ErrorLabel>
     </S.Container>
   );
 };

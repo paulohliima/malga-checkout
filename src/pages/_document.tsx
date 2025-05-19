@@ -57,6 +57,11 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
             rel="stylesheet"
           ></link>
+          <link
+            rel="shortcut icon"
+            href="/assets/favicon.png"
+            type="image/png"
+          />
         </Head>
         <body>
           <Main />

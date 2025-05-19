@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 12px;
   padding: 16px;
   max-width: 600px;
   margin: auto;
@@ -11,8 +10,9 @@ export const Form = styled.form`
 `;
 
 export const Label = styled.label`
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-profile-2);
+  padding-bottom: 8px;
 `;
 
 export const Input = styled.input`
@@ -39,9 +39,4 @@ export const Button = styled.button`
   &:hover {
     background-color: var(--color-profile-2);
   }
-`;
-
-export const Error = styled.span`
-  color: red;
-  font-size: var(--font-size-12);
 `;

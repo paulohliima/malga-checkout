@@ -26,13 +26,13 @@ export interface IItem {
 }
 
 export interface IPaymentCard {
-  number?: string; // só na criação
+  number?: string;
   holderName: string;
-  cvv?: string; // só na criação
+  cvv?: string;
   expirationDate: string;
   installments: number;
-  firstDigits?: string; // na resposta
-  lastDigits?: string; // na resposta
+  firstDigits?: string;
+  lastDigits?: string;
 }
 
 export interface ITicketPayment {
