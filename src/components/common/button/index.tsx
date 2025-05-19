@@ -71,7 +71,11 @@ const CustomButton: React.FC<IButtonProps> = ({
             padding,
             textTransform: "capitalize",
             minWidth: "10px",
-            color: color ? color : "#fff",
+            color: color
+              ? color
+              : variant === "text"
+              ? "var(--color-profile-2)"
+              : "var(--color-white)",
             backgroundColor:
               variant === "text" || variant === "outlined"
                 ? "none"

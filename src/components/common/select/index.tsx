@@ -13,6 +13,9 @@ interface ICustomSelect {
   options: Option[];
   onChange: React.Dispatch<any>;
   fullWidth?: boolean;
+  error?: boolean;
+  helperText?: string;
+  fixedLabelAsPlaceholder?: boolean;
 }
 
 const CustomSelect = ({
@@ -21,17 +24,22 @@ const CustomSelect = ({
   options,
   onChange,
   fullWidth = true,
+  error = false,
+  helperText = "",
+  fixedLabelAsPlaceholder = false,
 }: ICustomSelect) => {
   return (
     <S.Container>
       <FormControl color="success" size="small" fullWidth={fullWidth}>
-        <InputLabel>{label}</InputLabel>
+        {<InputLabel>{label}</InputLabel>}
         <Select
           value={value}
-          label={label}
+          label={fixedLabelAsPlaceholder && label}
+          error={error}
           onChange={(e) => onChange(e.target.value)}
           MenuProps={{
             disableScrollLock: true,
+            disablePortal: true,
             style: { width: "100%" },
           }}
           sx={{
@@ -50,7 +58,7 @@ const CustomSelect = ({
               color: "var(--grey-2)",
             },
             "& fieldset": {
-              borderRadius: "16px",
+              borderRadius: "4px",
               borderColor: "var(--color-profile-2)",
             },
           }}
@@ -61,6 +69,7 @@ const CustomSelect = ({
             </MenuItem>
           ))}
         </Select>
+        <S.ErrorLabel>{error ? helperText : "\u00A0"}</S.ErrorLabel>
       </FormControl>
     </S.Container>
   );

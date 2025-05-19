@@ -1,3 +1,4 @@
+import { CartProvider } from "./cartProvider";
 import { LoadingProvider } from "./loadingProvider";
 import { TransactionsProvider } from "./transactionsProvider";
 
@@ -5,9 +6,11 @@ import { TransactionsProvider } from "./transactionsProvider";
 const Provider = ({ children }: any) => {
   return (
     <>
-      <TransactionsProvider>
-        <LoadingProvider>{children}</LoadingProvider>
-      </TransactionsProvider>
+      <CartProvider>
+        <TransactionsProvider>
+          <LoadingProvider>{children}</LoadingProvider>
+        </TransactionsProvider>
+      </CartProvider>
     </>
   );
 };

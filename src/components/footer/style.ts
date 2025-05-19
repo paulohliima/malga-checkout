@@ -13,7 +13,7 @@ export const Container = styled.div`
 `;
 
 export const Text = styled.h3`
-  font-size: var(--font-size-12);
+  font-size: var(--font-size-10);
 
   @media (min-width: 500px) {
     font-size: var(--font-size-14);
@@ -24,7 +24,7 @@ export const Text = styled.h3`
 `;
 
 export const Bold = styled.span`
-  font-size: var(--font-size-12);
+  font-size: var(--font-size-10);
   font-weight: bold;
 
   @media (min-width: 500px) {

@@ -66,7 +66,7 @@ export const ImageLanding = styled.img`
   width: 100%;
   min-width: 390px;
   max-width: 400px;
-  padding: 20px 0;
+  padding-top: 20px;
 
   @media (min-width: 500px) {
     padding: 0;

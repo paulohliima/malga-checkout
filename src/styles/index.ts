@@ -83,6 +83,7 @@ export const RootVariables = createGlobalStyle`
         //FEEDBACK
         --alert-1:#cd742b;
         --sucess-1: #18794e;
+        --failed-1:  #b80606;
 
         //COLORS PROFILE
         --color-profile-1: #349974;
