@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 14px;
   align-items: center;
+  padding-bottom: 80px;
 `;
 
 export const LoadMore = styled.h4`

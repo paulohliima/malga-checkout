@@ -128,16 +128,16 @@ export const RootVariables = createGlobalStyle`
 `;
 
 export const GlobalStyles = createGlobalStyle`
-    body { 
-        background-color: var(--color-brand-5);
-        color: var(--grey-3);
+
+    html, body, #__next {
+        height: 100%;
         min-height: 100vh;
-        font-family: var(--lexend);
+        width: 100%;
+        overflow-x: hidden;  
+        overflow-y: auto;
     }
 
     button {
         cursor: pointer;
     }
-    ::-webkit-scrollbar {
-    display: none;
-}`;
+    `;

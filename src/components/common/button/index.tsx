@@ -61,7 +61,7 @@ const CustomButton: React.FC<IButtonProps> = ({
 
   return (
     <>
-      {variant !== "stylized" ? (
+      {variant !== "stylized" && variant !== "text" ? (
         <Button
           onClick={onClick}
           variant={variant}
@@ -71,31 +71,18 @@ const CustomButton: React.FC<IButtonProps> = ({
             padding,
             textTransform: "capitalize",
             minWidth: "10px",
-            color: color
-              ? color
-              : variant === "text"
-              ? "var(--color-profile-2)"
-              : "var(--color-white)",
+            color: color ? color : "var(--color-white)",
             backgroundColor:
-              variant === "text" || variant === "outlined"
-                ? "none"
-                : "var(--color-profile-1)",
+              variant === "outlined" ? "none" : "var(--color-profile-1)",
             borderColor: color,
             border:
-              variant === "text"
-                ? "none"
-                : variant === "outlined"
+              variant === "outlined"
                 ? "1px solid var(--color-profile-2)"
                 : "none",
             transition: "0.2s ease-in",
-            borderRadius: variant === "text" ? "none" : "7px",
+            borderRadius: "7px",
             "&:hover":
-              variant === "text"
-                ? {
-                    backgroundColor: "transparent",
-                    color: "var(--color-profile-1)",
-                  }
-                : variant === "outlined"
+              variant === "outlined"
                 ? {
                     color: "var(--color-profile-1)",
                     borderColor: "var(--color-profile-1)",
@@ -107,8 +94,10 @@ const CustomButton: React.FC<IButtonProps> = ({
         >
           {label || icon}
         </Button>
-      ) : (
+      ) : variant === "stylized" ? (
         <S.Container onClick={onClick}>{label}</S.Container>
+      ) : (
+        <S.ContainerText onClick={onClick}>{label}</S.ContainerText>
       )}
     </>
   );

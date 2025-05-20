@@ -17,7 +17,7 @@ interface IFilterInputs {
 }
 
 const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
-  const isMobile = useMediaQuery(1024);
+  const isMobile = useMediaQuery(1023);
   const { loading, setLoading } = useLoading();
   const { allTransactions, setTransactionsValues, setPageValues } =
     useTransactions();

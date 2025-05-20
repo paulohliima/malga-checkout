@@ -10,8 +10,8 @@ export const Container = styled.div<{ $isLogged: boolean; $isMobile: boolean }>`
   align-items: center;
   justify-content: center;
   height: 80px;
-  position: absolute;
-  top: 0;
+  position: relative;
+  background-color: var(--color-brand-5);
   width: 100%;
   box-shadow: ${(props) =>
     (props.$isLogged && !props.$isMobile) || !props.$isMobile
@@ -27,5 +27,6 @@ export const Container = styled.div<{ $isLogged: boolean; $isMobile: boolean }>`
 
 export const Row = styled.div`
   display: flex;
+  align-items: center;
   gap: 20px;
 `;

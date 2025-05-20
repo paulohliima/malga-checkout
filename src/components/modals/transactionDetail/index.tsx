@@ -223,7 +223,7 @@ const TransactionDetailModal = ({
   transaction,
 }: ITransactionDetailModal) => {
   const isMobile = useMediaQuery();
-  const isLaptop = useMediaQuery(1024);
+  const isLaptop = useMediaQuery(1023);
   const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
