@@ -9,6 +9,7 @@ import {
 import { transactionsService } from "@/services/transactionsService";
 import { toast } from "react-toastify";
 import { transactions } from "@/lib/transactions-store";
+import { isAxiosError } from "axios";
 
 interface TransactionsContextType {
   transactionsValues: ITransactionResponse[];
@@ -48,7 +49,10 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         setTransactionsValues(dataPaginated);
         setTransactionsPaginated(dataPaginated);
       } catch (e: unknown) {
-        if (e instanceof Error) {
+        if (isAxiosError(e)) {
+          const message = e.response?.data?.message || "Erro na requisição";
+          toast.error(message);
+        } else if (e instanceof Error) {
           toast.error(e.message);
         } else {
           toast.error("Erro desconhecido");

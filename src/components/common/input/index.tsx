@@ -22,6 +22,7 @@ interface ICustomInput {
   fixedLabelAsPlaceholder?: boolean;
   noSpaces?: boolean;
   noNumbers?: boolean;
+  noSpecialChars?: boolean;
 }
 
 const CustomInput = ({
@@ -39,6 +40,7 @@ const CustomInput = ({
   fixedLabelAsPlaceholder = false,
   noSpaces = false,
   noNumbers = false,
+  noSpecialChars = true,
   onClickSearchIcon,
 }: ICustomInput) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -72,6 +74,9 @@ const CustomInput = ({
 
               if (noNumbers) {
                 newValue = newValue.replace(/[0-9]/g, "");
+              }
+              if (noSpecialChars) {
+                newValue = newValue.replace(/[^a-zA-Z0-9\s]/g, "");
               }
 
               onChange(newValue);

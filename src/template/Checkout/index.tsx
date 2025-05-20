@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import CartList from "@/components/cartList";
 import { useRouter } from "next/router";
 import { useTransactions } from "@/providers/transactionsProvider";
+import { isAxiosError } from "axios";
 
 const CheckoutPage: React.FC = () => {
   const router = useRouter();
@@ -57,7 +58,10 @@ const CheckoutPage: React.FC = () => {
         router.replace("/completed");
       }, 300);
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (isAxiosError(e)) {
+        const message = e.response?.data?.message || "Erro na requisição";
+        toast.error(message);
+      } else if (e instanceof Error) {
         toast.error(e.message);
       } else {
         toast.error("Erro desconhecido");

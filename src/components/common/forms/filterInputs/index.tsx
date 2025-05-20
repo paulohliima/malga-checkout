@@ -10,6 +10,7 @@ import { useLoading } from "@/providers/loadingProvider";
 import { transactionsService } from "@/services/transactionsService";
 import { toast } from "react-toastify";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { isAxiosError } from "axios";
 
 interface IFilterInputs {
   handleClearFilter: () => void;
@@ -63,7 +64,14 @@ const FilterInputs = ({ handleClearFilter }: IFilterInputs) => {
         setLoading(false);
       }, 400);
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : "Erro desconhecido");
+      if (isAxiosError(e)) {
+        const message = e.response?.data?.message || "Erro na requisição";
+        toast.error(message);
+      } else if (e instanceof Error) {
+        toast.error(e.message);
+      } else {
+        toast.error("Erro desconhecido");
+      }
     }
   };
 

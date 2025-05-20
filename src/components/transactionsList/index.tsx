@@ -23,6 +23,7 @@ import { useLoading } from "@/providers/loadingProvider";
 import { useTransactions } from "@/providers/transactionsProvider";
 import { transactionsService } from "@/services/transactionsService";
 import { FilterSearchData, searchSchema } from "@/schemas/filterSchema";
+import { isAxiosError } from "axios";
 
 const TransactionsList = () => {
   const isMobile = useMediaQuery(1024);
@@ -79,7 +80,10 @@ const TransactionsList = () => {
         setLoading(false);
       }, 300);
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (isAxiosError(e)) {
+        const message = e.response?.data?.message || "Erro na requisição";
+        toast.error(message);
+      } else if (e instanceof Error) {
         toast.error(e.message);
       } else {
         toast.error("Erro desconhecido");
@@ -109,7 +113,10 @@ const TransactionsList = () => {
         reset();
       }, 300);
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (isAxiosError(e)) {
+        const message = e.response?.data?.message || "Erro na requisição";
+        toast.error(message);
+      } else if (e instanceof Error) {
         toast.error(e.message);
       } else {
         toast.error("Erro desconhecido");

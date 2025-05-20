@@ -1,5 +1,26 @@
 # Teste Técnico - Malga - Desenvolvedor Web Full-Stack Pleno - Front-End
 
+# 🚀 Tecnologias Utilizadas
+
+- **[Next.js](https://nextjs.org/)** — Framework React com suporte a rotas de páginas e API (utilizado para simular os endpoints da API conforme o contrato)
+- **[React Hook Form](https://react-hook-form.com/)** — Manipulação de formulários
+- **[Yup](https://github.com/jquense/yup)** — Validação de dados de formulários
+- **[Styled Components](https://styled-components.com/)** — Estilização com CSS-in-JS
+- **Context API** — Gerenciamento de estado global da aplicação
+- **[Vercel](https://vercel.com/)** — Plataforma utilizada para o deploy da aplicação
+
+# 🧪 Como usar
+
+Siga os passos abaixo para rodar o projeto localmente:
+
+### 1. Clone o repositório
+
+### 2. Instalar dependências -> ´npm install´
+
+### 3. Executar o projeto -> ´npm run dev´
+
+### 4. aplicação estará disponível em -> http://localhost:3000
+
 # Requisitos Funcionais
 
 1. Página de Checkout:

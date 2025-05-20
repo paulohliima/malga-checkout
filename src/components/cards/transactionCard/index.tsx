@@ -10,6 +10,7 @@ import { useLoading } from "@/providers/loadingProvider";
 import { ITransactionResponse } from "@/interfaces/transactions";
 import TransactionDetailModal from "../../modals/transactionDetail";
 import { transactionsService } from "@/services/transactionsService";
+import { isAxiosError } from "axios";
 
 interface ITransactionCard {
   transaction: ITransactionResponse;
@@ -36,7 +37,10 @@ const TransactionCard = ({ transaction }: ITransactionCard) => {
         setOpenModalDetails(true);
       }
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (isAxiosError(e)) {
+        const message = e.response?.data?.message || "Erro na requisição";
+        toast.error(message);
+      } else if (e instanceof Error) {
         toast.error(e.message);
       } else {
         toast.error("Erro desconhecido");
