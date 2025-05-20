@@ -1,6 +1,6 @@
 # Teste Técnico Malga - Front-End
 
-# Desenvolvedor Web Full-Stack Pleno
+### Realizado por Paulo Lima - Desenvolvedor Web Full-Stack Pleno
 
 # 🚀 Tecnologias Utilizadas
 
