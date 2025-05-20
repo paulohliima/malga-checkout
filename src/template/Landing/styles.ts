@@ -59,7 +59,11 @@ export const Row = styled.div`
   gap: 20px;
   width: 100%;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
+
+  @media (min-width: 500px) {
+    justify-content: start;
+  }
 `;
 
 export const ImageLanding = styled.img`

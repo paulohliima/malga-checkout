@@ -49,10 +49,11 @@ export const InfoBox = styled.div`
   flex-direction: column;
   padding: 60px 0;
   gap: 20px;
-  width: 400px;
+  width: 350px;
 
   @media (min-width: 768px) {
     padding: 80px 0;
+    width: 450px;
   }
 `;
 
