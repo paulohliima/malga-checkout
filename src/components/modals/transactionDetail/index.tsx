@@ -68,19 +68,27 @@ const TabClientAndPayment = ({ customer, payment }: ITabClient) => {
           <>
             <S.SectionTitle>Pagamento com Cartão</S.SectionTitle>
 
-            <S.InfoGroup>
-              <S.Label>Nome no Cartão:</S.Label>
-              <S.Value>{payment.card?.holderName}</S.Value>
-            </S.InfoGroup>
             <S.Row>
               <S.InfoGroup>
-                <S.Label>Parcelas:</S.Label>
-                <S.Value>{payment.card?.installments}x</S.Value>
+                <S.Label>Nome no Cartão:</S.Label>
+                <S.Value>{payment.card?.holderName}</S.Value>
+              </S.InfoGroup>
+              <S.InfoGroup>
+                <S.Label $textAlign="end">Parcelas:</S.Label>
+                <S.Value $textAlign="end">
+                  {payment.card?.installments}x
+                </S.Value>
+              </S.InfoGroup>
+            </S.Row>
+            <S.Row>
+              <S.InfoGroup>
+                <S.Label>Data de Validade:</S.Label>
+                <S.Value>{payment.card?.expirationDate}</S.Value>
               </S.InfoGroup>
               {(payment.card?.firstDigits || payment.card?.lastDigits) && (
                 <S.InfoGroup>
-                  <S.Label>Cartão:</S.Label>
-                  <S.Value>
+                  <S.Label $textAlign="end">Cartão:</S.Label>
+                  <S.Value $textAlign="end">
                     {payment.card?.firstDigits}••••••••
                     {payment.card?.lastDigits}
                   </S.Value>
@@ -164,10 +172,9 @@ const TabClientAndPayment = ({ customer, payment }: ITabClient) => {
         </S.InfoGroup>
 
         <S.InfoGroup>
-          <S.Label>Documento:</S.Label>
-          <S.Value>
-            {document.type.toUpperCase()} - {document.number}
-          </S.Value>
+          <S.Label $textAlign="end">Documento:</S.Label>
+          <S.Value $textAlign="end">{document.type.toUpperCase()}</S.Value>
+          <S.Value $textAlign="end">{document.number}</S.Value>
         </S.InfoGroup>
       </S.Row>
 
@@ -182,7 +189,7 @@ const TabClientAndPayment = ({ customer, payment }: ITabClient) => {
         </S.InfoGroup>
 
         <S.InfoGroup>
-          <S.Label>Estado:</S.Label>
+          <S.Label $textAlign="end">Estado:</S.Label>
           <S.Value>{address.state}</S.Value>
         </S.InfoGroup>
       </S.Row>
@@ -193,7 +200,7 @@ const TabClientAndPayment = ({ customer, payment }: ITabClient) => {
         </S.InfoGroup>
 
         <S.InfoGroup>
-          <S.Label>Bairro:</S.Label>
+          <S.Label $textAlign="end">Bairro:</S.Label>
           <S.Value>{address.neighborhood}</S.Value>
         </S.InfoGroup>
       </S.Row>

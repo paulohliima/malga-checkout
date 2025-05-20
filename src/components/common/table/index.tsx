@@ -20,6 +20,7 @@ import TransactionDetailModal from "@/components/modals/transactionDetail";
 import useTranslate from "@/hooks/useTranslate";
 import { useTransactions } from "@/providers/transactionsProvider";
 import { useLoading } from "@/providers/loadingProvider";
+import { isAxiosError } from "axios";
 
 interface ICustomTable {
   transactions: ITransactionResponse[];
@@ -60,7 +61,10 @@ const CustomTable = ({ transactions }: ICustomTable) => {
         setOpenModalDetails(true);
       }
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (isAxiosError(e)) {
+        const message = e.response?.data?.message || "Erro na requisição";
+        toast.error(message);
+      } else if (e instanceof Error) {
         toast.error(e.message);
       } else {
         toast.error("Erro desconhecido");

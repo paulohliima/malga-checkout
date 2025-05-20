@@ -1,44 +1,28 @@
-import { useEffect } from "react";
+// components/VLibras.tsx
 
-export default function VLibrasWidget() {
-  useEffect(() => {
-    const existingScript = document.querySelector(
-      'script[src="https://vlibras.gov.br/app/vlibras-plugin.js"]'
-    );
+import Script from "next/script";
 
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
-      script.defer = true;
-      document.body.appendChild(script);
-
-      script.onload = () => {
-        // Inicializa o widget após o carregamento do script
-        if (window.VLibras) {
-          new window.VLibras.Widget("https://vlibras.gov.br/app");
-        }
-      };
-    } else {
-      // Script já carregado, só inicializa
-      if (window.VLibras) {
-        new window.VLibras.Widget("https://vlibras.gov.br/app");
-      }
-    }
-  }, []);
-
+export default function VLibras() {
   return (
-    <div
-      id="vlibras-container"
-      dangerouslySetInnerHTML={{
-        __html: `
-          <div vw class="enabled">
-            <div vw-access-button class="active"></div>
-            <div vw-plugin-wrapper>
-              <div class="vw-plugin-top-wrapper"></div>
-            </div>
-          </div>
-        `,
-      }}
-    />
+    <>
+      <div {...{ vw: "true" }} className="enabled">
+        <div {...{ "vw-access-button": "true" }} className="active"></div>
+        <div {...{ "vw-plugin-wrapper": "true" }}>
+          <div className="vw-plugin-top-wrapper"></div>
+        </div>
+      </div>
+
+      <Script
+        src="https://vlibras.gov.br/app/vlibras-plugin.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          if (window.VLibras) {
+            new window.VLibras.Widget("https://vlibras.gov.br/app");
+          } else {
+            console.error("VLibras não foi carregado.");
+          }
+        }}
+      />
+    </>
   );
 }

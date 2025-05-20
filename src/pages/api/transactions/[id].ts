@@ -12,8 +12,16 @@ export default function handler(
     (transaction) => transaction.id === id
   );
 
+  if (findTransaction?.paymentMethod?.card?.number) {
+    const first4 = findTransaction.paymentMethod.card.number.slice(0, 4);
+    const last4 = findTransaction.paymentMethod.card.number.slice(-4);
+
+    findTransaction.paymentMethod.card.firstDigits = first4;
+    findTransaction.paymentMethod.card.lastDigits = last4;
+  }
+
   if (!findTransaction) {
-    return res.status(404).json({ message: "Transaction not found" });
+    return res.status(404).json({ message: "Transação não encontrada." });
   }
 
   if (req.method === "GET") {

@@ -21,15 +21,18 @@ export const InfoGroup = styled.div`
   margin-bottom: 20px;
 `;
 
-export const Label = styled.span`
+export const Label = styled.span<{ $textAlign?: string }>`
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-600);
   color: var(--grey-2);
+  text-align: ${(props) => (props.$textAlign ? props.$textAlign : "start")};
 `;
 
-export const Value = styled.span`
+export const Value = styled.span<{ $textAlign?: string }>`
   font-size: var(--font-size-14);
-  color: var(--grey-2);
+  font-weight: bold;
+  color: var(--grey-1);
+  text-align: ${(props) => (props.$textAlign ? props.$textAlign : "start")};
 `;
 
 export const TotalValue = styled.span`
