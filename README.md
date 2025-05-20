@@ -1,4 +1,6 @@
-# Teste Técnico - Malga - Desenvolvedor Web Full-Stack Pleno - Front-End
+# Teste Técnico Malga - Front-End
+
+# Desenvolvedor Web Full-Stack Pleno
 
 # 🚀 Tecnologias Utilizadas
 
@@ -9,6 +11,7 @@
 - **Context API** — Gerenciamento de estado global da aplicação
 - **[Vercel](https://vercel.com/)** — Plataforma utilizada para o deploy da aplicação
 - **[Jest](https://jestjs.io/pt-BR/)** — Plataforma utilizada para aplicação de testes
+- **[VLibras](https://www.gov.br/governodigital/pt-br/acessibilidade-e-usuario/vlibras)** — Ferramenta de acessibilidade em libras
 
 # 🧪 Como usar
 
