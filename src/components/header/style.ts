@@ -1,12 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div<{ $isLogged: boolean; $isMobile: boolean }>`
-  display: ${(props) =>
-    (props.$isLogged && !props.$isMobile) ||
-    !props.$isMobile ||
-    (props.$isLogged && props.$isMobile)
-      ? "flex"
-      : "none"};
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 80px;

@@ -4,7 +4,6 @@ export const ContainerTab = styled.div`
   font-family: var(--lexend);
   width: 100%;
   border-radius: 12px;
-  overflow-y: scroll;
 `;
 
 export const SectionTitle = styled.h3`
