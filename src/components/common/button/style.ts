@@ -65,7 +65,7 @@ export const Container = styled.button`
 
 export const ContainerText = styled.p`
   color: var(--color-profile-2);
-  font-size: var(--font-size-16);
+  font-size: var(--font-size-18);
   cursor: pointer;
   text-align: center;
   line-height: normal;
