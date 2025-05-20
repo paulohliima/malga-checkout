@@ -9,6 +9,7 @@ import { Controller, Resolver, useForm } from "react-hook-form";
 import { BiError } from "react-icons/bi";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoOptionsOutline } from "react-icons/io5";
+import { TbFaceIdError } from "react-icons/tb";
 
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 
@@ -316,12 +317,23 @@ const TransactionsList = () => {
         </S.ContainerInputSearch>
       )}
 
-      {isMobile ? (
-        <>
-          <CardList transactions={transactionsValues} />
-        </>
+      {transactionsValues.length === 0 ? (
+        <S.NotFoundedContainer>
+          <TbFaceIdError
+            style={{ width: "50px", height: "50px", color: "var(--grey-2)" }}
+          />
+          <S.NotFoundedLabel>Nenhuma Transação encontrada!</S.NotFoundedLabel>
+        </S.NotFoundedContainer>
       ) : (
-        <CustomTable transactions={transactionsValues} />
+        <>
+          {isMobile ? (
+            <>
+              <CardList transactions={transactionsValues} />
+            </>
+          ) : (
+            <CustomTable transactions={transactionsValues} />
+          )}
+        </>
       )}
     </S.Container>
   );

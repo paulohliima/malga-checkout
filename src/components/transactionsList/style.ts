@@ -101,7 +101,7 @@ export const ContainerCardsInfo = styled.div`
   margin-bottom: 20px;
 
   @media (min-width: 560px) {
-    gap: 20px;
+    justify-content: space-around;
   }
 `;
 
@@ -132,4 +132,19 @@ export const IconTransactions = styled(MdOutlinePayments)`
   @media (min-width: 1024px) {
     display: none;
   }
+`;
+
+export const NotFoundedContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+`;
+
+export const NotFoundedLabel = styled.span`
+  color: var(--grey-2);
+  font-size: var(--font-size-18);
+  font-family: var(--lexend);
 `;
