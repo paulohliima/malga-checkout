@@ -65,12 +65,13 @@ export const Container = styled.button`
 
 export const ContainerText = styled.p`
   color: var(--color-profile-2);
-  font-size: var(--font-size-18);
+  font-size: var(--font-size-16);
   cursor: pointer;
   text-align: center;
   line-height: normal;
   height: max-content;
   transition: 0.3s all;
+  font-family: var(--lexend);
 
   &:hover {
     color: var(--color-profile-1);
