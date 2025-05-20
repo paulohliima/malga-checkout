@@ -23,7 +23,7 @@ export const Container = styled.div`
     max-height: 300px;
   }
 
-  @media (min-width: 550px) {
+  @media (min-width: 560px) {
     max-width: 100%;
   }
 `;

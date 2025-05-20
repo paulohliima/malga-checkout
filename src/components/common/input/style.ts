@@ -18,7 +18,7 @@ export const Container = styled.div<SearchIconBoxProps>`
   width: 100%;
   max-width: 345px;
 
-  @media (min-width: 550px) {
+  @media (min-width: 560px) {
     max-width: 100%;
   }
 `;

@@ -43,16 +43,6 @@ export const Container = styled.div<ContainerProps>`
       height: 50px;
     }
   }
-  @media (min-width: 768px) {
-    height: 80px;
-    width: 220px;
-    padding: 20px;
-
-    svg {
-      width: 50px;
-      height: 50px;
-    }
-  }
 `;
 
 export const Column = styled.div`
