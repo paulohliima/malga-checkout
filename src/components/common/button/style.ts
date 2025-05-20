@@ -62,3 +62,17 @@ export const Container = styled.button`
     background-color: var(--color-profile-1);
   }
 `;
+
+export const ContainerText = styled.p`
+  color: var(--color-profile-2);
+  font-size: var(--font-size-16);
+  cursor: pointer;
+  text-align: center;
+  line-height: normal;
+  height: max-content;
+  transition: 0.3s all;
+
+  &:hover {
+    color: var(--color-profile-1);
+  }
+`;

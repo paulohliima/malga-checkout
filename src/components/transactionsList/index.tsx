@@ -27,7 +27,7 @@ import { FilterSearchData, searchSchema } from "@/schemas/filterSchema";
 import { isAxiosError } from "axios";
 
 const TransactionsList = () => {
-  const isMobile = useMediaQuery(1024);
+  const isMobile = useMediaQuery(1023);
   const { loading, setLoading } = useLoading();
 
   const {

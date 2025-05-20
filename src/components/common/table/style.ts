@@ -6,6 +6,10 @@ export const Container = styled.div`
   flex-direction: column;
   min-height: 335px;
   align-items: center;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const TitleBox = styled(Box)`

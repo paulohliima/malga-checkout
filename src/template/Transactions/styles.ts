@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--color-brand-5);
-  padding: 100px 10px;
+  padding-top: 20px;
   min-height: 100vh;
 
   @media (min-width: 768px) {

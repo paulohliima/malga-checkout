@@ -4,7 +4,7 @@ import CartMobile from "../cartMobile";
 import CartDesktop from "../cartDesktop";
 
 const CartList = () => {
-  const isMobile = useMediaQuery(1024);
+  const isMobile = useMediaQuery(1023);
 
   return (
     <S.Container>{isMobile ? <CartMobile /> : <CartDesktop />}</S.Container>
