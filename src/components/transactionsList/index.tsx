@@ -20,24 +20,20 @@ import CustomButton from "../common/button";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import FilterInputs from "../common/forms/filterInputs";
 import { useLoading } from "@/providers/loadingProvider";
-import { ITransactionResponse } from "@/interfaces/transactions";
 import { useTransactions } from "@/providers/transactionsProvider";
 import { transactionsService } from "@/services/transactionsService";
 import { FilterSearchData, searchSchema } from "@/schemas/filterSchema";
 
-interface IListTransactions {
-  transactions: ITransactionResponse[];
-}
-
-const TransactionsList = ({ transactions }: IListTransactions) => {
+const TransactionsList = () => {
   const isMobile = useMediaQuery(1024);
   const { loading, setLoading } = useLoading();
 
   const {
     allTransactions,
-    transactionsPaginated,
+    transactionsValues,
     setTransactionsValues,
     setPageValues,
+    setTransactionsPaginated,
   } = useTransactions();
   const [openMenuFilter, setOpenMenuFilter] = useState(false);
 
@@ -75,6 +71,7 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
       setLoading(true);
       setTimeout(() => {
         setTransactionsValues(data);
+        setTransactionsPaginated(data);
         setPageValues((prev) => ({
           ...prev,
           currentPage: 1,
@@ -90,16 +87,34 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
     }
   };
 
-  const handleClearFilter = () => {
-    setTransactionsValues(transactionsPaginated);
-    setOpenMenuFilter(false);
-    setSearchedValue(false);
-    setSelectFilterByStatus("");
-    setPageValues((prev) => ({
-      ...prev,
-      currentPage: 1,
-    }));
-    reset();
+  const handleClearFilter = async () => {
+    try {
+      const data = await transactionsService.getAll({ page: 1 });
+      setLoading(true);
+      setTimeout(() => {
+        setTransactionsValues(data);
+        setTransactionsPaginated(data);
+        setPageValues((prev) => ({
+          ...prev,
+          currentPage: 1,
+        }));
+        setLoading(false);
+        setOpenMenuFilter(false);
+        setSearchedValue(false);
+        setSelectFilterByStatus("");
+        setPageValues((prev) => ({
+          ...prev,
+          currentPage: 1,
+        }));
+        reset();
+      }, 300);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+      } else {
+        toast.error("Erro desconhecido");
+      }
+    }
   };
 
   const handleSearchById = (data: FilterSearchData) => {
@@ -296,10 +311,10 @@ const TransactionsList = ({ transactions }: IListTransactions) => {
 
       {isMobile ? (
         <>
-          <CardList transactions={transactions} />
+          <CardList transactions={transactionsValues} />
         </>
       ) : (
-        <CustomTable transactions={transactions} />
+        <CustomTable transactions={transactionsValues} />
       )}
     </S.Container>
   );

@@ -4,7 +4,7 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import { MdOutlineAttachMoney } from "react-icons/md";
-import { MdOutlineExitToApp } from "react-icons/md";
+import { RiHome9Fill } from "react-icons/ri";
 
 import { useRouter } from "next/router";
 import Logo from "../logo";
@@ -73,6 +73,12 @@ const SideBar = () => {
         <S.Menu>
           <Logo marginBotton="80px" />
           <S.Column>
+            <li onClick={handleLogout}>
+              <RiHome9Fill
+                style={{ marginRight: 8, width: "30px", height: "30px" }}
+              />{" "}
+              Início
+            </li>
             <li onClick={handleDashboard}>
               <DashboardIcon
                 style={{ marginRight: 8, width: "30px", height: "30px" }}
@@ -86,12 +92,6 @@ const SideBar = () => {
               Checkout
             </li>
           </S.Column>
-          <li onClick={handleLogout} style={{ marginTop: "auto" }}>
-            <MdOutlineExitToApp
-              style={{ marginRight: 8, width: "30px", height: "30px" }}
-            />
-            Sair
-          </li>
         </S.Menu>
       </S.Container>
     </>

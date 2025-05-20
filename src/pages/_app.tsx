@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import VLibrasWidget from "@/components/vLibras";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -21,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <RootVariables />
           <Header />
           <Component {...pageProps} />
+          <VLibrasWidget />
           <Footer />
           <SideBar />
         </Provider>
