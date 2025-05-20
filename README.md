@@ -25,9 +25,9 @@ Siga os passos abaixo para rodar o projeto localmente:
 
 ### 4. Executar o projeto -> ´npm run dev´
 
-### 5. aplicação estará disponível em -> http://localhost:3000
+### 5. Aplicação estará disponível em -> http://localhost:3000
 
-**[Aplicação em Vercel](https://malga-checkout.vercel.app/)**
+###**[Aplicação em Vercel](https://malga-checkout.vercel.app/)**
 
 # Requisitos Funcionais
 
