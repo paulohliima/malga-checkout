@@ -8,7 +8,12 @@ const config: Config = {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy", // Para ignorar imports de estilos, se usados
   },
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.(ts|tsx)$": [
+      "ts-jest",
+      {
+        tsconfig: "tsconfig.test.json",
+      },
+    ],
   },
   transformIgnorePatterns: [
     "/node_modules/(?!(@mui|some-esm-lib)/)", // Ajuda a transpilar libs com ESM que causam erro
