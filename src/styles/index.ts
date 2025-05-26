@@ -119,6 +119,7 @@ export const RootVariables = createGlobalStyle`
         --lexend: "Lexend", sans-serif;
         --lexend-exa: "Lexend Exa", sans-serif;
         --pacifico: "Pacifico", cursive;
+        --roboto: "Roboto", sans-serif;
 
         //BOX-SHADOW
         --box-shadow-1: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -135,6 +136,7 @@ export const GlobalStyles = createGlobalStyle`
         width: 100%;
         overflow-x: hidden;  
         overflow-y: auto;
+        font-family: var(--roboto)
     }
 
     button {
