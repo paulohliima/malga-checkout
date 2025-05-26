@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import * as S from "./style";
 import useMediaQuery from "@/hooks/useMediaQuery";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 
+import { MdDashboard } from "react-icons/md";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { RiHome9Fill } from "react-icons/ri";
 
@@ -85,7 +85,7 @@ const SideBar = () => {
               Início
             </li>
             <li onClick={handleDashboard}>
-              <DashboardIcon
+              <MdDashboard
                 style={{
                   marginRight: 8,
                   width: "30px",
