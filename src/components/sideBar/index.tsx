@@ -75,19 +75,34 @@ const SideBar = () => {
           <S.Column>
             <li onClick={handleLogout}>
               <RiHome9Fill
-                style={{ marginRight: 8, width: "30px", height: "30px" }}
+                style={{
+                  marginRight: 8,
+                  width: "30px",
+                  height: "30px",
+                  color: "var(--color-white)",
+                }}
               />{" "}
               Início
             </li>
             <li onClick={handleDashboard}>
               <DashboardIcon
-                style={{ marginRight: 8, width: "30px", height: "30px" }}
+                style={{
+                  marginRight: 8,
+                  width: "30px",
+                  height: "30px",
+                  color: "var(--color-white)",
+                }}
               />{" "}
               Painel de Gestão
             </li>
             <li onClick={handleClient}>
               <MdOutlineAttachMoney
-                style={{ marginRight: 8, width: "30px", height: "30px" }}
+                style={{
+                  marginRight: 8,
+                  width: "30px",
+                  height: "30px",
+                  color: "var(--color-white)",
+                }}
               />
               Checkout
             </li>

@@ -115,5 +115,6 @@ export const Column = styled.div`
   li {
     display: flex;
     justify-content: start;
+    color: "var(--color-white)";
   }
 `;
